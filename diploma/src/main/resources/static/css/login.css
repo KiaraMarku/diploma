@@ -1,0 +1,43 @@
+body{
+    /*background-color: rgba(186, 158, 201, 0.65);*/
+    background-image: url("../images/purple-background.jpg");
+
+}
+h2{
+    color: rgba(188, 87, 255, 0.65);
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+.registration-form{
+    padding: 50px 0;
+}
+
+.registration-form form{
+    background-color: rgb(255, 255, 255);
+    max-width: 600px;
+    margin: auto;
+    padding: 50px 70px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+
+}
+
+
+.registration-form .item{
+
+    border-radius: 20px;
+    margin-bottom: 25px;
+    padding: 10px 20px;
+}
+
+.registration-form .create-account{
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgba(188, 87, 255, 0.65);
+    border: none;
+    color: white;
+    margin-top: 20px;
+}

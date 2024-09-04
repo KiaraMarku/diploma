@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <file url="file://$PROJECT_DIR$" libraries="{fullcalendar, jquery-3.4.1, moment.js}" />
+    <file url="file://$PROJECT_DIR$/diploma" libraries="{fullcalendar, jquery-3.4.1, moment.js}" />
+  </component>
+</project>

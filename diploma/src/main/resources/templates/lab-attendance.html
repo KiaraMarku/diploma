@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Lab Attendance</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/attendance.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <h3>Lab Attendance - [[${labSchedule.theClass.name}]]</h3>
+        <h5>Group: [[${labSchedule.studentGroup.name}]]</h5>
+        <h5>Date: [[${labSchedule.date}]]</h5>
+        <form th:action="@{/professor/labs/attendance/save}" method="post">
+            <input type="hidden" name="labScheduleId" th:value="${labSchedule.id}" />
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Attendance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${students}">
+                    <td th:text="${student.firstName + ' ' + student.lastName}"></td>
+                    <td>
+                        <input type="checkbox" th:name="${'attendance_' + student.id}"
+                               th:checked="${attendanceMap[student.id] != null ? attendanceMap[student.id] : false}" value="true"/>
+                        <span class="custom-checkbox"></span>
+                        <input type="hidden" th:name="${'attendance_' + student.id }" value="false" />
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Save Attendance</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

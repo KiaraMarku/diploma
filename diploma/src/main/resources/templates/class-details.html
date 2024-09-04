@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <h3 th:text="${classDetails.name} + ' Details'"></h3>
+        <p th:text="'Description: ' + ${classDetails.description}"></p>
+        <p th:text="'Credits: ' + ${classDetails.credits}"></p>
+        <p th:text="'Lab: ' + ${classDetails.hasLab}"></p>
+        <p th:text="'CourseWork: ' + ${classDetails.hasCoursework}"></p>
+        <p th:text="'Midterm: ' + ${classDetails.hasMidterm}"></p>
+
+       
+    </div>
+</div>
+</body>
+</html>

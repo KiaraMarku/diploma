@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h3>Home Page</h3>
+    <hr>
+    <p>Welcome to the home page.</p>
+    <p sec:authorize="hasRole('ADMIN')">
+        <a class="btn btn-primary" th:href="@{/register/studentForm}">Register Student</a>
+        <a class="btn btn-primary" th:href="@{/register/professorForm}">Register Professor</a>
+    </p>
+    <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" class="btn btn-danger">
+    </form>
+</div>
+</body>
+</html>

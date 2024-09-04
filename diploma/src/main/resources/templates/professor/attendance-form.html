@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <title>Select Class</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Select a Class</h3>
+                <form action="/professor/attendance/mark" method="get">
+                    <div class="form-group">
+                        <label for="class">Class</label>
+                        <select id="class" name="classId" class="form-control" required>
+                            <option value="" disabled selected>Select Class</option>
+                            <option th:each="class: ${classes}" th:value="${class.id}" th:text="${class.name}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="group">Group</label>
+                        <select id="group" name="groupId" class="form-control" required>
+                            <option value="" disabled selected>Select Group</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="week">Week</label>
+                        <select id="week" name="week" class="form-control">
+                            <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${'Week ' + i}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mark Attendance</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <img src="/images/3893222.jpg" alt="Image description" class="img-fluid">
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function() {
+        $('#class').on('change', function() {
+            var classId = $(this).val();
+            console.log("Selected classId: ", classId);
+
+            if (classId) {
+                $.get('/professor/attendance/groups', { classId: classId }, function(data) {
+                    console.log("Groups data received:", data); // Debug log
+
+                    var groupSelect = $('#group');
+                    groupSelect.empty();
+                    groupSelect.append('<option value="" disabled selected>Select Group</option>'); // Add default option
+
+                    $.each(data, function(index, group) {
+                        var optionText = group.name + ' (' + group.department.name + ', ' + group.yearLevel + ')';
+                        groupSelect.append('<option value="' + group.id + '">' + optionText + '</option>');
+                    });
+                }).fail(function(xhr, status, error) {
+                    console.error("Failed to load groups data:", error);
+                });
+            }
+        });
+    });
+</script>
+</div>
+</body>
+</html>

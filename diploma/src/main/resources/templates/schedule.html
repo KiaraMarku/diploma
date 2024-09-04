@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .fc-view-container {
+            width: 100%; /* Ensure the container takes up full width */
+        }
+
+        .fc-agendaWeek-view .fc-day-header,
+        .fc-agendaWeek-view .fc-day {
+            width: 14.28%; /* Increase the width of each day column */
+        }
+
+        .fc-agendaWeek-view .fc-day-header {
+            text-align: center; /* Center the day names */
+        }
+
+        .fc-time-grid .fc-slats td {
+            height: 100px; /* Adjust time slot height as needed */
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+    <h3>Schedule</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+    <form id="schedule-form">
+        <div class="form-group">
+            <label for="scholarYear">Scholar Year</label>
+            <select id="scholarYear" name="scholarYear" class="form-control">
+                <option value="" disabled selected>Select Scholar Year</option>
+                <option th:each="year : ${scholarYears}" th:value="${year.id}" th:text="${year.yearNumber}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="school-group">Group</label>
+            <select id="school-group" name="group" class="form-control">
+                <option value="" disabled selected>Select Group</option>
+
+            </select>
+        </div>
+        <button type="button" id="show-schedule" class="btn btn-primary">Show Schedule</button>
+    </form>
+                </div>
+                <div class="col-md-4">
+                    <img src="/images/4885229.jpg" alt="Image description" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <hr>
+    <div id="calendar"></div>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+
+        <script>
+            console.log(jQuery);
+            $(document).ready(function() {
+                $('#scholarYear').on('change', function() {
+                    var scholarYearId = $(this).val();
+                    console.log(scholarYearId);
+                    if (scholarYearId) {
+                        $.get('/schedule/groups', { scholarYearId: scholarYearId }, function(data) {
+                            console.log(data);
+                            var groupSelect = $('#school-group');
+                            groupSelect.empty();
+                            groupSelect.append('<option value="" disabled selected>Select Group</option>');
+                            if (data.length === 0) {
+                                groupSelect.append('<option value="" disabled>No groups available</option>');
+                            } else {
+                                $.each(data, function(index, group) {
+                                    var optionText = group.name + ' (' + group.department.name + ',  ' + group.yearLevel + ')';
+                                    groupSelect.append('<option value="' + group.id + '">' + optionText + '</option>');
+                                });
+
+                            }
+                        }).fail(function() {
+                            console.error("Failed to load groups data.");
+                        });
+                    }
+                });
+                $('#show-schedule').on('click', function() {
+                    var groupId = $('#school-group').val();
+                    if (groupId) {
+                        $.get('/schedule/query', { groupId: groupId }, function(data) {
+                            console.log("Data received:", data);
+
+                            let events = data.map(event => {
+                                let startDate = moment().day(event.dow).format('YYYY-MM-DD') + 'T' + event.start.split('T')[1];
+                                let endDate = moment().day(event.dow).format('YYYY-MM-DD') + 'T' + event.end.split('T')[1];
+
+                                return {
+                                    title: event.title,
+                                    start: startDate,
+                                    end: endDate,
+                                    lecturer: event.lecturer,
+                                    hall: event.hall,
+                                    type: event.type
+                                };
+                            });
+
+                            console.log("Events mapped:", events);
+
+                            $('#calendar').fullCalendar('destroy'); // Destroy any existing calendar
+                            $('#calendar').fullCalendar({
+                                header: false,
+                                defaultView: 'agendaWeek',
+                                editable: false,
+                                events: events,
+                                allDaySlot: false,
+                                slotDuration: '01:00:00',
+                                minTime: '08:00:00',
+                                maxTime: '18:00:00',
+                                height: 'auto',
+                                contentHeight: 600,
+                                columnFormat: 'ddd',
+                                eventRender: function(event, element) {
+
+                                    element.find('.fc-title').html(`
+                        <strong>${event.title}</strong><br/>
+                        <em>${event.lecturer}</em><br/>
+                        <small>${event.hall} | ${event.type}</small>
+                    `);
+                                }
+                            });
+                        }).fail(function() {
+                            console.error("Failed to load schedule data.");
+                        });
+                    }
+                });
+
+            });
+        </script>
+    </div>
+
+</body>
+</html>
