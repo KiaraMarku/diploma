@@ -17,4 +17,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Integer> 
 
     @Query("SELECT a FROM Attendance a JOIN a.schedule s WHERE  s.theClass.id = :classId AND a.week=:week AND a.student = :student ")
     List<Attendance> findByStudentAndClassAndWeek(Student student, int classId,int week);
+
+    @Query("SELECT a FROM Attendance a WHERE a.student.id = :studentId AND a.schedule.theClass.id = :classId AND a.schedule.type = 'SEMINAR'")
+    List<Attendance> findByStudentAndClass(@Param("studentId") int studentId, @Param("classId") int classId);
 }

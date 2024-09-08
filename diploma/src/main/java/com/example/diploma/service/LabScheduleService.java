@@ -28,6 +28,10 @@ import java.util.List;
         public LabSchedule findById(int labScheduleId) {
                 return labScheduleRepository.findById(labScheduleId);
         }
+
+    public void deleteById(int id) {
+            labScheduleRepository.deleteById(id);
+    }
 }
 
 

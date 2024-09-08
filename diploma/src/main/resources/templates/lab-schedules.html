@@ -32,7 +32,8 @@
           <td th:text="${labSchedule.hall}">Hall</td>
           <td  th:text="${labSchedule.studentGroup.name + ' - ' + labSchedule.studentGroup.department.name + ' Year ' +labSchedule.studentGroup.yearLevel}"></td>
           <td>
-            <a th:href="@{/professor/labs/attendance/{labScheduleId}(labScheduleId=${labSchedule.id})}" class="btn btn-primary">Mark Attendance</a>
+            <a th:href="@{/professor/labs/attendance/{labScheduleId}(labScheduleId=${labSchedule.id})}" class="btn btn-primary m-1">Attendance</a>
+            <a th:href="@{/professor/labs/delete/{labScheduleId}(labScheduleId=${labSchedule.id})}" class="btn btn-danger m-1">Delete</a>
           </td>
         </tr>
         </tbody>

@@ -25,16 +25,18 @@ public class ProfessorAttendanceController {
     private final ScheduleService scheduleService;
     private final GroupService groupService;
     private  final ClassService classService;
+    private final  LabAttendanceService labAttendanceService;
 
 
     @Autowired
-    public ProfessorAttendanceController(AttendanceService attendanceService, ProfessorService professorService, StudentService studentService, ScheduleService scheduleService, GroupService groupService, ClassService classService) {
+    public ProfessorAttendanceController(AttendanceService attendanceService, ProfessorService professorService, StudentService studentService, ScheduleService scheduleService, GroupService groupService, ClassService classService, LabAttendanceService labAttendanceService) {
         this.attendanceService = attendanceService;
         this.professorService = professorService;
         this.studentService = studentService;
         this.scheduleService = scheduleService;
         this.groupService = groupService;
         this.classService = classService;
+        this.labAttendanceService = labAttendanceService;
     }
 
     @GetMapping("/classes")
@@ -90,6 +92,15 @@ public class ProfessorAttendanceController {
         return "redirect:/professor/attendance/classes";
     }
 
+    @GetMapping("/class/{classId}/student/{studentId}/attendance")
+    public String viewStudentAttendance(@PathVariable("classId") int classId, @PathVariable("studentId") int studentId, Model model) {
+        Map<String, Object> seminarAttendance = attendanceService.calculateSeminarAttendance(studentId, classId);
+        Map<String, Object> labAttendance = labAttendanceService.calculateLabAttendance(studentId, classId);
+
+        model.addAttribute("seminarAttendance", seminarAttendance);
+        model.addAttribute("labAttendance", labAttendance);
+        return "student-attendance-details";
+    }
 
 
 }

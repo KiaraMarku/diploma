@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AttendanceService {
@@ -81,6 +78,34 @@ public class AttendanceService {
 
     public List<Attendance> getAttendanceForStudent(Student student, int classId,int week) {
         return attendanceRepository.findByStudentAndClassAndWeek(student, classId,week);
+    }
+
+    public Map<String, Object> calculateSeminarAttendance(int studentId, int classId) {
+        List<Attendance> seminarAttendance = attendanceRepository.findByStudentAndClass(studentId, classId);
+        int totalSeminars = seminarAttendance.size();
+        long attendedSeminars ;
+        double percentage ;
+        boolean eligible ;
+
+
+         if(totalSeminars==0)  {
+             attendedSeminars=0;
+             percentage=100;
+             eligible=true;
+
+         }
+         else {
+             attendedSeminars=seminarAttendance.stream().filter(Attendance::getAttended).count();
+             percentage=  (attendedSeminars / (double) totalSeminars) * 100;
+             eligible=  percentage >= 75;
+         }
+        Map<String, Object> result = new HashMap<>();
+        result.put("attended", attendedSeminars);
+        result.put("total", totalSeminars);
+        result.put("percentage", percentage);
+        result.put("eligible", eligible);
+
+        return result;
     }
 }
 

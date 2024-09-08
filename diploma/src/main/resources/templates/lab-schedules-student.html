@@ -29,8 +29,9 @@
           <td th:text="${labSchedule.endTime}"></td>
           <td th:text="${labSchedule.hall}"></td>
           <td>
-            <span th:if="${#lists.contains(labAttendanceByClass.get(class.id), labSchedule)}" style="color: green;">Attended</span>
-            <span th:if="${!#lists.contains(labAttendanceByClass.get(class.id), labSchedule)}" style="color: red;">Not Attended</span>
+            <span th:if="${labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}" style="color: green;">Attended</span>
+            <span th:if="${!labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}" style="color: red;">Not Attended</span>
+          </td>
           </td>
         </tr>
         </tbody>

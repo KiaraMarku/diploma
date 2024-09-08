@@ -2,28 +2,34 @@ package com.example.diploma.controller;
 
 import com.example.diploma.entity.Class;
 import com.example.diploma.entity.Professor;
+import com.example.diploma.entity.Student;
+import com.example.diploma.entity.StudentGroup;
 import com.example.diploma.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/professor")
 public class ProfessorController {
 
     private  ProfessorService professorService;
 
-    private  final ClassService classService;
+    private  final ScheduleService scheduleService;
 
-    private final LabScheduleService labScheduleService;
+    private final StudentService studentService;
 
 
-    public ProfessorController(ProfessorService professorService, GroupService groupService, ClassService classService, LabScheduleService labScheduleService, ScheduleService scheduleService) {
+    public ProfessorController(ProfessorService professorService, ScheduleService scheduleService, StudentService studentService) {
       this.professorService=professorService;
-        this.classService = classService;
-        this.labScheduleService = labScheduleService;
+      this.studentService = studentService;
+      this.scheduleService=scheduleService;
     }
 
     @GetMapping("/classes")
@@ -33,5 +39,25 @@ public class ProfessorController {
         model.addAttribute("classes", classes);
         return "professor/professor-classes";
     }
+
+    @GetMapping("/students/{classId}")
+    public String viewStudentsForClass(@PathVariable("classId") int classId, Model model) {
+
+        List<StudentGroup> groups = scheduleService.getGroupsByClass(classId);
+
+
+        Map<StudentGroup, List<Student>> studentsPerGroup = new HashMap<>();
+
+        for (StudentGroup group : groups) {
+            List<Student> students = studentService.getStudentsByGroup(group.getId());
+            studentsPerGroup.put(group, students);
+        }
+        model.addAttribute("groups",groups);
+        model.addAttribute("studentsPerGroup", studentsPerGroup);
+        model.addAttribute("classId", classId);
+        return "professor/class-students";
+    }
+
+
 
 }

@@ -13,6 +13,7 @@
       <tr>
         <th>Class Name</th>
         <th>Description</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -21,7 +22,11 @@
           <a th:href="@{/class/{id}(id=${class.id})}" th:text="${class.name}"></a>
         </td>
         <td th:text="${class.description}"></td>
+        <td>
+          <a class="btn btn-primary" th:href="@{/professor/students/{id}(id=${class.id})}" >View Students</a>
+        </td>
       </tr>
+
       </tbody>
     </table>
   </div>

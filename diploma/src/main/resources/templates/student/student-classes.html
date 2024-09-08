@@ -13,14 +13,19 @@
       <tr>
         <th>Class Name</th>
         <th>Description</th>
+        <th>Requriements</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="class : ${classes}">
         <td>
-          <a th:href="@{/class/{id}(id=${class.id})}" th:text="${class.name}"></a>
+          <a th:href="@{/class/{id}(id=${class.id})}" th:text="${class.name}"
+             style="color: rgba(115,47,162,0.65);font-weight: bold" ></a>
         </td>
         <td th:text="${class.description}"></td>
+        <td>
+          <a th:href="@{/student/summary/{id}(id=${class.id})}">Attendance</a>
+        </td>
       </tr>
       </tbody>
     </table>

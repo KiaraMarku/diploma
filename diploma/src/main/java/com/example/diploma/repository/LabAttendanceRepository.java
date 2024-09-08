@@ -14,7 +14,9 @@ public interface LabAttendanceRepository extends JpaRepository<LabAttendance, In
     List<LabAttendance> findByLabSchedule(LabSchedule labSchedule);
     LabAttendance findByStudentAndLabSchedule(Student student, LabSchedule labSchedule);
 
-    @Query("SELECT la FROM LabAttendance la JOIN la.labSchedule ls WHERE ls.theClass.id = :classId AND la.student.id = :studentId")
+    @Query("SELECT la FROM LabAttendance la WHERE la.student.id = :studentId AND la.labSchedule.theClass.id = :classId")
     List<LabAttendance> findByClassIdAndStudentId(@Param("classId") int classId, @Param("studentId") int studentId);
+
+
 }
 

@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <title>Home Page</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h3>Attendance Summary</h3>
+     <hr>
+    <h5>Seminar Attendance</h5>
+    <p>Attended: <span th:text="${seminarAttendance.attended}"></span> / <span th:text="${seminarAttendance.total}"></span></p>
+    <p>Percentage: <span th:text="${seminarAttendance.percentage}"></span>%</p>
+    <p th:if="${seminarAttendance.eligible}">
+        Status: <span style="color: green;">Eligible</span>
+    </p>
+    <p th:if="${!seminarAttendance.eligible}">
+        Status: <span style="color: red;">Not Eligible</span>
+    </p>
+<hr>
+    <h5>Lab Attendance</h5>
+    <p>Attended: <span th:text="${labAttendance.attended}"></span> / <span th:text="${labAttendance.total}"></span></p>
+    <p>Percentage: <span th:text="${labAttendance.percentage}"></span>%</p>
+    <p th:if="${labAttendance.eligible}">
+        Status: <span style="color: green;">Eligible</span>
+    </p>
+    <p th:if="${!labAttendance.eligible}">
+        Status: <span style="color: red;">Not Eligible</span>
+    </p>
+
+    //prove
+    <h3>Class Requirements</h3>
+    <form th:action="@{/professor/student/{studentId}/class/{classId}/saveRequirements(studentId=${student.id}, classId=${class.id})}" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>Requirement Type</th>
+                <th>Score / Pass/Fail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="requirement : ${classRequirements}">
+                <td th:text="${requirement.requirementType}"></td>
+                <td>
+                    <input type="number" th:if="${!requirement.passFail}"
+                           th:name="${'requirements[' + requirement.id + '].score'}"
+                           min="0" max="${requirement.totalPoints}">
+                    <select th:if="${requirement.passFail}"
+                            th:name="${'requirements[' + requirement.id + '].score'}">
+                        <option value="1">Pass</option>
+                        <option value="0">Fail</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Save Requirements</button>
+    </form>
+    //prove
+</div>
+</body>
+</html>

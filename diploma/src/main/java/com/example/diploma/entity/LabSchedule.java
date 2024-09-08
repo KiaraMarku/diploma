@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "lab_schedule")
@@ -33,5 +34,8 @@ public class LabSchedule {
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime endTime;
     private String hall;
+
+    @OneToMany(mappedBy = "labSchedule", cascade = CascadeType.ALL)
+    List <LabAttendance> labAttendances;
 }
 

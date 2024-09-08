@@ -34,7 +34,7 @@ public class LabScheduleController {
     }
 
     @GetMapping("/professor/labSchedules")
-    public String viewLabSchedulesForProfesor( Model model) {
+    public String viewLabSchedulesForProfessor( Model model) {
         Professor professor = professorService.getLoggedInProfessor();
         List<Class> classes = professorService.getClassesForProfessor(professor);
         Map<Integer, List<LabSchedule>> labSchedulesByClass = new HashMap<>();
@@ -51,26 +51,31 @@ public class LabScheduleController {
     }
 
     @GetMapping("/student/labSchedules")
-    public String viewLabSchedulesForStudent( Model model) {
+    public String viewLabSchedulesForStudent(Model model) {
         Student student = studentService.getLoggedInStudent();
         Set<Class> classes = studentService.getClassesForStudent(student);
         Map<Integer, List<LabSchedule>> labSchedulesByClass = new HashMap<>();
-        Map<Integer, List<LabAttendance>> labAttendanceByClass = new HashMap<>();
+        Map<Integer, Map<Integer, Boolean>> labAttendanceStatusByClass = new HashMap<>();
 
         for (Class cls : classes) {
             List<LabSchedule> labSchedules = labScheduleService.getLabSchedulesByClass(cls.getId());
-
-            List<LabAttendance> labAttendances = labAttendanceService.getLabAttendanceByClassAndStudent(cls.getId(), student.getId());
             labSchedulesByClass.put(cls.getId(), labSchedules);
-            labAttendanceByClass.put(cls.getId(), labAttendances);
+
+            Map<Integer, Boolean> attendanceStatusMap = new HashMap<>();
+            for (LabSchedule schedule : labSchedules) {
+                LabAttendance attendance = labAttendanceService.getLabAttendanceForStudentAndSchedule(student,schedule);
+                attendanceStatusMap.put(schedule.getId(), attendance != null && attendance.getAttended());
+            }
+            labAttendanceStatusByClass.put(cls.getId(), attendanceStatusMap);
         }
 
         model.addAttribute("classes", classes);
         model.addAttribute("labSchedulesByClass", labSchedulesByClass);
-        model.addAttribute("labAttendanceByClass", labAttendanceByClass);
+        model.addAttribute("labAttendanceStatusByClass", labAttendanceStatusByClass);
 
         return "lab-schedules-student";
     }
+
 
     @GetMapping("/professor/class/{id}/addLabSchedule")
     public String showAddLabScheduleForm(@PathVariable("id") int classId, Model model) {
@@ -84,10 +89,16 @@ public class LabScheduleController {
 
     @PostMapping("/professor/class/{id}/addLabSchedule")
     public String addLabSchedule(@ModelAttribute("labSchedule") LabSchedule labSchedule, @RequestParam("groupId") int groupId, @PathVariable("id") int classId) {
+        labSchedule.setId(null);
         labSchedule.setTheClass(classService.findById(classId));
         labSchedule.setStudentGroup(groupService.findById(groupId));
         labScheduleService.saveLabSchedule(labSchedule);
-        return "redirect:/professor/class/" + labSchedule.getTheClass().getId();
+        return "redirect:/professor/labSchedules" ;
     }
 
+    @GetMapping("/professor/labs/delete/{labScheduleId}")
+    public String deleteLabSchedule(@PathVariable("labScheduleId")int id){
+        labScheduleService.deleteById(id);
+        return "redirect:/professor/labSchedules" ;
+    }
 }
