@@ -30,7 +30,7 @@ public class ScheduleController {
     public String showScheduleForm(Model model) {
         model.addAttribute("scholarYears", scheduleService.getAllScholarYears());
         model.addAttribute("groups", new ArrayList<StudentGroup>()); // Initially empty
-        return "schedule";
+        return "common/schedule";
     }
 
 

@@ -54,7 +54,7 @@ public class StudentController {
     }
 
     @GetMapping("/summary/{classId}")
-    public String viewAttendanceSummary(@PathVariable("classId") int classId, Model model) {
+    public String viewPerformanceSummary(@PathVariable("classId") int classId, Model model) {
         this.student=studentService.getLoggedInStudent();
         // Get seminar attendance details
         Map<String, Object> seminarAttendance = seminarAttendanceService.calculateSeminarAttendance(student.getId(), classId);
@@ -101,7 +101,7 @@ public class StudentController {
         model.addAttribute("isEligible", isEligible);
         model.addAttribute("ineligibleReason", ineligibleReason.toString());
 
-        return "student/performance-summary";
+        return "common/performance-summary";
     }
 
 

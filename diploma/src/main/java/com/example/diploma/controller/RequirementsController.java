@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/student")
-public class StudentRequirementsController {
+@RequestMapping("professor/student")
+public class RequirementsController {
 
     private final AttendanceService seminarAttendanceService;
     private final LabAttendanceService labAttendanceService;
@@ -26,7 +26,7 @@ public class StudentRequirementsController {
 
 
 
-    public StudentRequirementsController(AttendanceService seminarAttendanceService, LabAttendanceService labAttendanceService, ClassRequirementService classRequirementService, StudentService studentService, ClassService classService, StudentClassRequirementRepository studentClassRequirementRepository) {
+    public RequirementsController(AttendanceService seminarAttendanceService, LabAttendanceService labAttendanceService, ClassRequirementService classRequirementService, StudentService studentService, ClassService classService, StudentClassRequirementRepository studentClassRequirementRepository) {
         this.seminarAttendanceService = seminarAttendanceService;
         this.labAttendanceService = labAttendanceService;
         this.classRequirementService = classRequirementService;
@@ -36,9 +36,8 @@ public class StudentRequirementsController {
     }
 
 
-
-    @GetMapping("/{studentId}/attendance/class/{classId}")
-    public String viewAttendanceSummary(@PathVariable("classId") int classId,
+    @GetMapping("/{studentId}/performance/class/{classId}")
+    public String viewPerformanceSummary(@PathVariable("classId") int classId,
                                         @PathVariable("studentId") int studentId,
                                         Model model) {
                 // Seminar attendance
@@ -72,17 +71,17 @@ public class StudentRequirementsController {
         model.addAttribute("student", student);
         model.addAttribute("class", theClass);
 
-        return "student/performance-summary";
+        return "common/performance-summary";
     }
     @PostMapping("/{studentId}/class/{classId}/saveRequirements")
     public String saveStudentRequirements(@PathVariable("studentId") int studentId,
                                           @PathVariable("classId") int classId,
                                           @ModelAttribute ClassRequirementDTO classRequirementDTO) {
 
-        // Save the class requirements for the student
+
         classRequirementService.saveStudentRequirements(studentId, classId, classRequirementDTO.getRequirements());
 
-        // Redirect back to the student performance summary
-        return "redirect:/student/" + studentId + "/attendance/class/" + classId;
+
+        return "redirect:/student/" + studentId + "/performance/class/" + classId;
     }
 }

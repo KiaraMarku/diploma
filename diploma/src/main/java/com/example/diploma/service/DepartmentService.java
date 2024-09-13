@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public class DepartmentService {
 
-    private DepartmentRepository departmenRepository;
+    private final DepartmentRepository departmentRepository;
 
     public DepartmentService(DepartmentRepository departmenRepository) {
-        this.departmenRepository = departmenRepository;
+        this.departmentRepository = departmenRepository;
     }
     public List<Department> findAll(){
-        return departmenRepository.findAll();
+        return departmentRepository.findAll();
 
     }
 }

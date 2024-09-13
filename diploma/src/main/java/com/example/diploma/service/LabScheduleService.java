@@ -29,7 +29,7 @@ import java.util.List;
                 return labScheduleRepository.findById(labScheduleId);
         }
 
-    public void deleteById(int id) {
+        public void deleteById(int id) {
             labScheduleRepository.deleteById(id);
     }
 }

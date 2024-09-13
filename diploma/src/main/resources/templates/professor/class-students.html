@@ -28,7 +28,7 @@
       <tr th:each="student : ${studentsPerGroup.get(group)}">
         <td th:text="${student.firstName} + ' ' + ${student.lastName}">Student Name</td>
         <td>
-          <a th:href="@{/student/{studentId}/attendance/class/{classId}(classId=${classId}, studentId=${student.id})}">
+          <a th:href="@{/professor/student/{studentId}/performance/class/{classId}(classId=${classId}, studentId=${student.id})}">
             View Details
           </a>
         </td>

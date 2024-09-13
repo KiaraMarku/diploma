@@ -18,13 +18,9 @@ import java.util.Set;
 @Service
 public class StudentService {
 
-
     private StudentRepository studentRepository;
-
     private StudentGroupRepository studentGroupRepository;
-
     private StudentGroupHistoryRepository studentGroupHistoryRepository;
-
     public StudentService(){
 
     }

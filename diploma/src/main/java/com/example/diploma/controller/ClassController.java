@@ -21,6 +21,6 @@ public class ClassController {
     public String viewClassDetails(@PathVariable("id") int classId, Model model) {
         Class classDetails = classService.findById(classId);
         model.addAttribute("classDetails", classDetails);
-        return "class-details";
+        return "common/class-details";
     }
 }

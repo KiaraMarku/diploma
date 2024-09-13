@@ -1,13 +1,12 @@
 package com.example.diploma.service;
 
-import com.example.diploma.extra.ScheduleEvent;
 import com.example.diploma.entity.Schedule;
 import com.example.diploma.entity.ScholarYear;
 import com.example.diploma.entity.StudentGroup;
+import com.example.diploma.extra.ScheduleEvent;
 import com.example.diploma.repository.ScheduleRepository;
 import com.example.diploma.repository.ScholarYearRepository;
 import com.example.diploma.repository.StudentGroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,14 +17,16 @@ import java.util.stream.Collectors;
 @Service
 public class ScheduleService {
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
 
-    @Autowired
-    private ScholarYearRepository scholarYearRepository;
+    private final ScheduleRepository scheduleRepository;
+    private final ScholarYearRepository scholarYearRepository;
+    private final StudentGroupRepository studentGroupRepository;
 
-    @Autowired
-    private StudentGroupRepository studentGroupRepository;
+    public ScheduleService(ScheduleRepository scheduleRepository, ScholarYearRepository scholarYearRepository, StudentGroupRepository studentGroupRepository) {
+        this.scheduleRepository = scheduleRepository;
+        this.scholarYearRepository = scholarYearRepository;
+        this.studentGroupRepository = studentGroupRepository;
+    }
 
     public List<ScholarYear> getAllScholarYears() {
         return scholarYearRepository.findAll();

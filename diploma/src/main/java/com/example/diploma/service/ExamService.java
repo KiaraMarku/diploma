@@ -82,7 +82,7 @@ public class ExamService {
                 Map<String, Object> eligibilityData = requirementService.calculateEligibility(student.getId(), theClass.getId());
                 boolean isEligible = (boolean) eligibilityData.get("isEligible");
 
-                // Step 4: If eligible, add to the list
+
                 if (isEligible) {
                     eligibleStudents.add(student);
                 }
@@ -115,7 +115,7 @@ public class ExamService {
     }
 
     public void saveOrUpdateExamCopy(int studentId, int examId, String status, int score) {
-        // Find existing exam copy or create a new one
+
         ExamCopy examCopy = examCopyRepository.findByStudentIdAndExamId(studentId, examId).orElse(null);
         if (examCopy == null) {
             examCopy = new ExamCopy();

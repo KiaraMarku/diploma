@@ -10,7 +10,7 @@
 <body>
 <div layout:fragment="content">
     <h2>Edit Exam for <span th:text="${examCopy.student.firstName}+' '+ ${examCopy.student.lastName}"></span></h2>
-    <form id="examForm" th:action="@{/templates/exams/professor/exams/{examId}/student/{studentId}/edit(examId=${examCopy.exam.id}, studentId=${examCopy.student.id})}" method="post">
+    <form id="examForm" th:action="@{/professor/exams/{examId}/student/{studentId}/edit(examId=${examCopy.exam.id}, studentId=${examCopy.student.id})}" method="post">
         <div class="form-group">
             <label for="status">Status</label>
             <select id="status" name="status" class="form-control" required>

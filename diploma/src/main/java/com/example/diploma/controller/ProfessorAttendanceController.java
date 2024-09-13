@@ -25,7 +25,6 @@ public class ProfessorAttendanceController {
     private final ScheduleService scheduleService;
     private final GroupService groupService;
     private  final ClassService classService;
-    private final  LabAttendanceService labAttendanceService;
 
 
     @Autowired
@@ -36,7 +35,7 @@ public class ProfessorAttendanceController {
         this.scheduleService = scheduleService;
         this.groupService = groupService;
         this.classService = classService;
-        this.labAttendanceService = labAttendanceService;
+
     }
 
     @GetMapping("/classes")
@@ -44,7 +43,7 @@ public class ProfessorAttendanceController {
         Professor professor = professorService.getLoggedInProfessor();
         List<Class> classes = professorService.getSeminarsForProfessor(professor);
         model.addAttribute("classes", classes);
-        return "professor/attendance-form";
+        return "professor/attendance/attendance-form";
     }
 
     @GetMapping("/groups")
@@ -79,7 +78,7 @@ public class ProfessorAttendanceController {
         model.addAttribute("week",week);
         model.addAttribute("attendanceMap", attendanceMap);
         model.addAttribute("dateMap", dateMap);
-        return "professor/mark-attendance";
+        return "professor/attendance/mark-attendance";
     }
 
     @PostMapping("/mark")
@@ -92,15 +91,15 @@ public class ProfessorAttendanceController {
         return "redirect:/professor/attendance/classes";
     }
 
-    @GetMapping("/class/{classId}/student/{studentId}/attendance")
-    public String viewStudentAttendance(@PathVariable("classId") int classId, @PathVariable("studentId") int studentId, Model model) {
-        Map<String, Object> seminarAttendance = attendanceService.calculateSeminarAttendance(studentId, classId);
-        Map<String, Object> labAttendance = labAttendanceService.calculateLabAttendance(studentId, classId);
-
-        model.addAttribute("seminarAttendance", seminarAttendance);
-        model.addAttribute("labAttendance", labAttendance);
-        return "student-attendance-details";
-    }
+//    @GetMapping("/class/{classId}/student/{studentId}/attendance")
+//    public String viewStudentAttendance(@PathVariable("classId") int classId, @PathVariable("studentId") int studentId, Model model) {
+//        Map<String, Object> seminarAttendance = attendanceService.calculateSeminarAttendance(studentId, classId);
+//        Map<String, Object> labAttendance = labAttendanceService.calculateLabAttendance(studentId, classId);
+//
+//        model.addAttribute("seminarAttendance", seminarAttendance);
+//        model.addAttribute("labAttendance", labAttendance);
+//        return "student-attendance-details";
+//    }
 
 
 }

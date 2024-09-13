@@ -23,7 +23,7 @@
             <td th:text="${entry.value != null ? entry.value.status : '-'}"></td>
             <td th:text="${entry.value != null ? entry.value.grade : '-'}"></td>
             <td>
-                <a th:href="@{/templates/exams/professor/exams/{examId}/student/{studentId}/edit(examId=${exam.id}, studentId=${entry.key.id})}"
+                <a th:href="@{/professor/exams/{examId}/student/{studentId}/edit(examId=${exam.id}, studentId=${entry.key.id})}"
                    class="btn btn-primary">Edit</a>
             </td>
         </tr>

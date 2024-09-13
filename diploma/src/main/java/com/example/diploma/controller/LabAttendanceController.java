@@ -47,7 +47,7 @@ public class LabAttendanceController {
         model.addAttribute("students", students);
         model.addAttribute("attendanceMap", attendanceMap);
 
-        return "lab-attendance";
+        return "professor/lab/lab-attendance";
     }
 
     @PostMapping("/professor/labs/attendance/save")

@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping ("/")
     public String showHome(){
-        return "home";
+        return "common/home";
     }
 
     @RequestMapping("/showLoginPage")
     public String showLoginForm(){
-        return "login-form";
+        return "common/login-form";
     }
 
     @RequestMapping ("/accessDenied")

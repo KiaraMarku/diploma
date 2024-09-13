@@ -22,7 +22,7 @@
             <td th:text="${exam.examSeason.name}"></td>
             <td th:text="${exam.date}"></td>
             <td>
-                <a th:href="@{/professor/exam/{examId}/students(examId=${exam.id})}" class="btn btn-primary">Grade Exam</a>
+                <a th:href="@{/professor/exams/{examId}/students(examId=${exam.id})}" class="btn btn-primary">Grade Exam</a>
             </td>
         </tr>
         </tbody>

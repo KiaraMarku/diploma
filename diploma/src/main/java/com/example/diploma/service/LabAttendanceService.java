@@ -17,16 +17,13 @@ import java.util.Map;
 public class LabAttendanceService {
 
     private final LabAttendanceRepository labAttendanceRepository;
-    private final StudentRepository studentRepository;
-    private final LabScheduleRepository labScheduleRepository;
 
     @Autowired
     public LabAttendanceService(LabAttendanceRepository labAttendanceRepository,
                                 StudentRepository studentRepository,
                                 LabScheduleRepository labScheduleRepository) {
         this.labAttendanceRepository = labAttendanceRepository;
-        this.studentRepository = studentRepository;
-        this.labScheduleRepository = labScheduleRepository;
+
     }
 
     public void saveLabAttendance(LabAttendance labAttendance) {

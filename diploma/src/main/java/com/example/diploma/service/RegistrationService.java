@@ -18,16 +18,11 @@ import java.util.Date;
 @Service
 public class RegistrationService {
 
-
     private UserRepository userRepository;
-
     private StudentRepository studentRepository;
-
     private ProfessorRepository professorRepository;
-
     private StudentGroupRepository groupRepository;
     private DepartmentRepository departmentRepository;
-
     private PasswordEncoder passwordEncoder;
 
     public RegistrationService(UserRepository userRepository, StudentRepository studentRepository, ProfessorRepository professorRepository, PasswordEncoder passwordEncoder, StudentGroupRepository groupRepository, DepartmentRepository departmentRepository) {

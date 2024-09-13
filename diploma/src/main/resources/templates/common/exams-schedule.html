@@ -38,8 +38,8 @@
 
             </tbody>
         </table>
-        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/templates/exams/professor/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
-        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/templates/exams/professor/exams/professor/view}" class="btn btn-primary">View past Exams</a>
+        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
+        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/past/view}" class="btn btn-primary">View past Exams</a>
         <a sec:authorize="hasRole('STUDENT')" th:href="@{/student/exams/graded}" class="btn btn-primary">View Graded Exams</a>
     </div>
 </div>
@@ -73,7 +73,7 @@
                             var examId = $(this).data('exam-id');
                             if (confirm('Are you sure you want to delete this exam?')) {
                                 $.ajax({
-                                    url: '/exams/schedule/delete',
+                                    url: '/professor/exams/schedule/delete',
                                     method: 'POST',
                                     data: { examId: examId },
                                     success: function() {

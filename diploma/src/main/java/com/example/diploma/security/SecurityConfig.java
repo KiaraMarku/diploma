@@ -26,8 +26,10 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/register/**").hasRole("ADMIN")
-                                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // Allow public access to static resources
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/professor/**").hasRole("PROFESOR")
+                                .requestMatchers("/student/**").hasRole("STUDENT")
+                                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->

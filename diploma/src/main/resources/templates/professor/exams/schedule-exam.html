@@ -10,7 +10,7 @@
     <div th:if="${error}" class="alert alert-danger">
         <p th:text="${error}"></p>
     </div>
-    <form th:action="@{/templates/exams/professor/exams/schedule}" th:object="${examDto}" method="post">
+    <form th:action="@{/professor/exams/add/schedule}" th:object="${examDto}" method="post">
         <div class="form-group">
             <label for="class">Class</label>
             <select id="class" th:field="*{classId}" class="form-control" required>

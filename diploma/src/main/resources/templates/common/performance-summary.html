@@ -87,7 +87,7 @@
     <div sec:authorize="hasRole('PROFESSOR')">
         <details>
             <summary><h5>Enter Requirements</h5></summary>
-            <form th:action="@{/student/{studentId}/class/{classId}/saveRequirements(studentId=${student.id}, classId=${class.id})}"
+            <form th:action="@{/professor/student/{studentId}/class/{classId}/saveRequirements(studentId=${student.id}, classId=${class.id})}"
                   th:object="${classRequirementDTO}" method="post">
                 <table class="table">
                     <thead>

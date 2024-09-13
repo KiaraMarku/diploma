@@ -47,7 +47,7 @@ public class LabScheduleController {
         model.addAttribute("classes", classes);
         model.addAttribute("labSchedulesByClass", labSchedulesByClass);
 
-        return "lab-schedules";
+        return "professor/lab/lab-schedules";
     }
 
     @GetMapping("/student/labSchedules")
@@ -73,7 +73,7 @@ public class LabScheduleController {
         model.addAttribute("labSchedulesByClass", labSchedulesByClass);
         model.addAttribute("labAttendanceStatusByClass", labAttendanceStatusByClass);
 
-        return "lab-schedules-student";
+        return "student/lab-schedules-student";
     }
 
 
@@ -84,7 +84,7 @@ public class LabScheduleController {
         model.addAttribute("classId",classId);
         model.addAttribute("labSchedule", labSchedule);
         model.addAttribute("groups",groups);
-        return "add-lab-schedule";
+        return "professor/lab/add-lab-schedule";
     }
 
     @PostMapping("/professor/class/{id}/addLabSchedule")
