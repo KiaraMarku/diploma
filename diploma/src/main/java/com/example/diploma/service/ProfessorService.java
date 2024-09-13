@@ -40,4 +40,23 @@ public class ProfessorService {
         return professorRepository.findByUsername(username);
     }
 
+    public List<Professor> getProfessorsByDepartment(int departmentId) {
+        return professorRepository.findProfessorsByDepartmentId(departmentId);
+    }
+
+
+    public Professor getProfessorById(int id) {
+        return professorRepository.findById(id).orElse(null);
+    }
+
+
+    public void saveOrUpdateProfessor(Professor professor) {
+        professorRepository.save(professor);
+    }
+
+
+    public void deleteProfessor(int id) {
+        professorRepository.deleteById(id);
+    }
+
 }

@@ -1,10 +1,12 @@
 package com.example.diploma.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "exam")
@@ -15,23 +17,25 @@ public class Exam {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "season")
-    private String season;
+    @ManyToOne
+    @JoinColumn(name = "exam_season_id")
+    private ExamSeason examSeason;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "exam_hall")
     private String examHall;
+    @Column(name = "start_time")
+    private LocalTime startTime;
+
+    @Column(name = "end_time")
+    private LocalTime endTime;
 
     @ManyToOne
+    @JsonProperty("class")
     @JoinColumn(name = "class_id")
-    private Class aClass;
-
-    @ManyToOne
-    @JoinColumn(name = "scholar_year_id")
-    private ScholarYear scholarYear;
-
+    private Class theClass;
 
 }
 

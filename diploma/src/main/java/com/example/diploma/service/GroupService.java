@@ -10,6 +10,7 @@ import java.util.List;
 public class GroupService {
 
     StudentGroupRepository studentGroupRepository;
+    private Object examCopyRepository;
 
     public GroupService(StudentGroupRepository studentGroupRepository){
         this.studentGroupRepository=studentGroupRepository;
@@ -23,4 +24,7 @@ public class GroupService {
 
         return studentGroupRepository.findById(id).orElse(null);
     }
+
+
+
 }

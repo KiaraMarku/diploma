@@ -23,8 +23,6 @@ public class StudentService {
 
     private StudentGroupRepository studentGroupRepository;
 
-    private ScheduleRepository scheduleRepository;
-
     private StudentGroupHistoryRepository studentGroupHistoryRepository;
 
     public StudentService(){
@@ -34,7 +32,6 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository, StudentGroupRepository studentGroupRepository, ScheduleRepository scheduleRepository, StudentGroupHistoryRepository studentGroupHistoryRepository) {
         this.studentRepository = studentRepository;
         this.studentGroupRepository = studentGroupRepository;
-        this.scheduleRepository = scheduleRepository;
         this.studentGroupHistoryRepository = studentGroupHistoryRepository;
     }
 
@@ -74,5 +71,19 @@ public class StudentService {
 
     public List<Student> getStudentsByGroup(int groupId) {
         return studentRepository.findStudentsByStudentGroupId(groupId);
+    }
+
+    public Student getStudentById(int studentId) {
+        return studentRepository.findById(studentId).orElse(null);
+    }
+
+
+    public void saveOrUpdateStudent(Student student) {
+        studentRepository.save(student);
+    }
+
+
+    public void deleteStudent(int id) {
+        studentRepository.deleteById(id);
     }
 }

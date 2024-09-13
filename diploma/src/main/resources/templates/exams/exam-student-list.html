@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Student List Exam</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Student List For Exam</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Grade</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="entry : ${studentExamMap}">
+            <td th:text="${entry.key.firstName}+ ' ' + ${entry.key.lastName}"></td>
+            <td th:text="${entry.value != null ? entry.value.status : '-'}"></td>
+            <td th:text="${entry.value != null ? entry.value.grade : '-'}"></td>
+            <td>
+                <a th:href="@{/templates/exams/professor/exams/{examId}/student/{studentId}/edit(examId=${exam.id}, studentId=${entry.key.id})}"
+                   class="btn btn-primary">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+<head>
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-image">
+                <img src="/images/profile.png" alt="Profile Image">
+            </div>
+            <div class="profile-details">
+                <h2 th:text="${professor.firstName + ' ' + professor.lastName}"></h2>
+                <p><strong>Email:</strong> <span th:text="${professor.email}"></span></p>
+                <p><strong>Birth Date:</strong> <span th:text="${#dates.format(professor.birthDate, 'yyyy-MM-dd')}"></span></p>
+                <p><strong>Gender:</strong> <span th:text="${professor.gender}">Gender</span></p>
+                <p><strong>Department:</strong> <span th:text="${professor.department.name}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

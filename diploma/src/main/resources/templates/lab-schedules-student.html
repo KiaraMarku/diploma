@@ -9,7 +9,9 @@
 <div layout:fragment="content">
   <div class="container">
     <h3>Your Lab Schedules</h3>
-
+    <div >
+      <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
+    </div>
     <div th:each="class : ${classes}">
       <h5 th:text="${class.name}"></h5>
       <table class="table">

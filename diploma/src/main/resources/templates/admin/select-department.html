@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">>
+<head>
+    <title>Student List</title>
+</head>
+<body>
+    <div layout:fragment="content">
+
+        <h2>Select Department</h2>
+        <form th:action="@{/admin/professors/department}" method="get">
+            <div class="form-group">
+            <select name="departmentId" class="form-control">
+                <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
+            </select>
+            </div>
+            <button class="btn btn-primary" type="submit">View Professors</button>
+        </form>
+
+</div>
+</body>
+</html>

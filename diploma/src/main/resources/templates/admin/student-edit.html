@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Edit Student</title>
+</head>
+<body>
+<div layout:fragment="content">
+<div>
+  <h2>Edit Student</h2>
+  <form th:action="@{/admin/students/save}" th:object="${student}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group">
+      <label for="firstName">Username</label>
+      <input type="text" id="username" th:field="*{username}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" th:field="*{firstName}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" th:field="*{lastName}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" th:field="*{email}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="cardId">Card ID</label>
+      <input type="text" id="cardId" th:field="*{cardId}" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="studentGroup">Student Group</label>
+      <select id="studentGroup" th:field="*{studentGroup.id}" class="form-control">
+        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name + ' ' + group.department.name + ' ' + group.yearLevel + ' '}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+</div>
+</body>
+</html>

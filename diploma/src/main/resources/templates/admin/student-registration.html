@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
   <title>Student Registration</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-  <form th:action="@{/register/student}" th:object="${student}" method="post" class="needs-validation" novalidate>
+  <form th:action="@{/admin/register/student}" th:object="${student}" method="post" class="needs-validation" novalidate>
     <h1>Student Registration</h1>
     <div class="row">
       <div class="col-md-4">

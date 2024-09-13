@@ -8,6 +8,9 @@
 <div layout:fragment="content">
   <div class="container">
     <h3>My Classes</h3>
+    <div >
+      <img src="/images/my-classes.jpg" alt="mu classes" class="img-fluid" width="500px">
+    </div>
     <table class="table">
       <thead>
       <tr>
@@ -24,7 +27,7 @@
         </td>
         <td th:text="${class.description}"></td>
         <td>
-          <a th:href="@{/student/summary/{id}(id=${class.id})}">Attendance</a>
+          <a th:href="@{/student/summary/{id}(id=${class.id})}">View Details</a>
         </td>
       </tr>
       </tbody>

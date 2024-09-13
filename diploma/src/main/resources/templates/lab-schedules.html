@@ -8,11 +8,13 @@
 <body>
 <div layout:fragment="content">
   <div class="container">
-    <h3>Lab Schedules</h3>
+    <h2>Lab Schedules</h2>
 
     <div th:each="class : ${classes}">
-      <h4 th:text="${class.name}">Class Name</h4>
-
+      <h5 th:text="${class.name}"></h5>
+      <div >
+        <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
+      </div>
       <table class="table">
         <thead>
         <tr>

@@ -8,15 +8,21 @@
 <body>
 <div layout:fragment="content">
     <div class="container">
-        <h3 th:text="${classDetails.name} + ' Details'"></h3>
-        <p th:text="'Description: ' + ${classDetails.description}"></p>
-        <p th:text="'Credits: ' + ${classDetails.credits}"></p>
-        <p th:text="'Lab: ' + ${classDetails.hasLab}"></p>
-        <p th:text="'CourseWork: ' + ${classDetails.hasCoursework}"></p>
-        <p th:text="'Midterm: ' + ${classDetails.hasMidterm}"></p>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="/images/class-details.jpg" alt="Image description" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+                <h3 th:text="${classDetails.name} + ' Details'"></h3>
+                <p th:text="'Description: ' + ${classDetails.description}"></p>
+                <p th:text="'Credits: ' + ${classDetails.credits}"></p>
+                <p th:text="'Lab: ' + ${classDetails.hasLab}"></p>
+                <p th:text="'CourseWork: ' + ${classDetails.hasCoursework}"></p>
+                <p th:text="'Midterm: ' + ${classDetails.hasMidterm}"></p>
+            </div>
 
-       
-    </div>
+        </div>
+</div>
 </div>
 </body>
 </html>

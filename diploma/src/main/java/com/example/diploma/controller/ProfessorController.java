@@ -25,6 +25,8 @@ public class ProfessorController {
 
     private final StudentService studentService;
 
+    private Professor professor;
+
 
     public ProfessorController(ProfessorService professorService, ScheduleService scheduleService, StudentService studentService) {
       this.professorService=professorService;
@@ -34,7 +36,7 @@ public class ProfessorController {
 
     @GetMapping("/classes")
     public String viewClasses(Model model) {
-        Professor professor = professorService.getLoggedInProfessor();
+        professor = professorService.getLoggedInProfessor();
         List<Class> classes = professorService.getClassesForProfessor(professor);
         model.addAttribute("classes", classes);
         return "professor/professor-classes";
@@ -58,6 +60,11 @@ public class ProfessorController {
         return "professor/class-students";
     }
 
-
+    @GetMapping("/profile")
+    public String viewProfile(Model model) {
+        professor=professorService.getLoggedInProfessor();
+        model.addAttribute("professor", professor);
+        return "professor/professor-profile";
+    }
 
 }
