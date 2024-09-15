@@ -1,10 +1,12 @@
 package com.example.diploma.service;
 
-import com.example.diploma.entity.*;
 import com.example.diploma.entity.Class;
+import com.example.diploma.entity.*;
 import com.example.diploma.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +21,17 @@ public class ExamService {
     private ExamCopyRepository examCopyRepository;
     private ClassRequirementService requirementService;
     private ScheduleRepository scheduleRepository;
+    private NotificationService notificationService;
 
 
-    public ExamService(ExamRepository examRepository, StudentRepository studentRepository, ExamSeasonRepository examSeasonRepository, ExamCopyRepository examCopyRepository, AttendanceService attendanceService, ClassRequirementService requirementService, ScheduleRepository scheduleRepository) {
+    public ExamService(ExamRepository examRepository, StudentRepository studentRepository, ExamSeasonRepository examSeasonRepository, ExamCopyRepository examCopyRepository, AttendanceService attendanceService, ClassRequirementService requirementService, ScheduleRepository scheduleRepository, NotificationService notificationService) {
         this.examRepository = examRepository;
         this.studentRepository = studentRepository;
         this.examSeasonRepository = examSeasonRepository;
         this.examCopyRepository = examCopyRepository;
         this.requirementService = requirementService;
         this.scheduleRepository = scheduleRepository;
+        this.notificationService = notificationService;
     }
 
 
@@ -114,24 +118,45 @@ public class ExamService {
         return examRepository.findById(examId).orElse(null);
     }
 
-    public void saveOrUpdateExamCopy(int studentId, int examId, String status, int score) {
+    public ExamCopy saveOrUpdateExamCopy(int studentId, int examId, String status, int score, MultipartFile examFile) {
+        Exam exam=examRepository.findById(examId).orElse(null);
+        Student student=studentRepository.findById(studentId).orElse(null);
+        ExamCopy examCopy = examCopyRepository.findByStudentIdAndExamId(studentId, examId)
+                .orElse(new ExamCopy());
+        examCopy.setStatus(status);
+        examCopy.setScore(score);
+        examCopy.setGrade(calculateGrade(score));
+        examCopy.setExam(exam);
+        examCopy.setStudent(student);
 
-        ExamCopy examCopy = examCopyRepository.findByStudentIdAndExamId(studentId, examId).orElse(null);
-        if (examCopy == null) {
-            examCopy = new ExamCopy();
-            examCopy.setStudent(studentRepository.findById(studentId).orElseThrow());
-            examCopy.setExam(examRepository.findById(examId).orElseThrow());
+
+        if (examFile != null && !examFile.isEmpty()) {
+            try {
+                examCopy.setFileName(examFile.getOriginalFilename());
+                examCopy.setFileType(examFile.getContentType());
+                examCopy.setData(examFile.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        examCopy.setStatus(status);
-        examCopy.setScore(status.equals("Present") ? score : 0);
-        examCopy.setGrade(calculateGrade(examCopy.getScore()));
-
-
         examCopyRepository.save(examCopy);
+        String message = "Your exam for " + exam.getTheClass().getName() +" has been graded.";
+        notificationService.createNotificationForStudent(studentId, message);
+        return examCopy;
     }
+
+
 
     public List<ExamCopy> getGradedExamsForStudent(int studentId) {
         return examCopyRepository.findGradedExamsByStudentId(studentId);
+    }
+
+    public ExamCopy getExamCopyById(int examCopyId) {
+        return examCopyRepository.findById(examCopyId).orElse(null);
+    }
+
+    public ExamCopy getExamCopyForStudentAndClass(int studentId, int classId) {
+       return examCopyRepository.findByStudentIdAndClassId(studentId,classId);
     }
 }

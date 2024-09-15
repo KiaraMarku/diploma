@@ -22,5 +22,9 @@ public interface ExamCopyRepository extends JpaRepository<ExamCopy, Integer> {
     @Query("SELECT e FROM ExamCopy e WHERE e.student.id = :studentId AND e.grade IS NOT NULL")
     List<ExamCopy> findGradedExamsByStudentId(@Param("studentId") int studentId);
 
+    @Query("SELECT ec FROM ExamCopy ec WHERE ec.student.id = :studentId AND ec.exam.theClass.id = :classId")
+    ExamCopy findByStudentIdAndClassId(@Param("studentId") int studentId, @Param("classId") int classId);
+
+
 
 }

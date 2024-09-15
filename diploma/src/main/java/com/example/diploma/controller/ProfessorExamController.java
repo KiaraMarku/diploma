@@ -3,14 +3,12 @@ package com.example.diploma.controller;
 import com.example.diploma.dto.ExamDto;
 import com.example.diploma.entity.Class;
 import com.example.diploma.entity.*;
-import com.example.diploma.service.ClassService;
-import com.example.diploma.service.ExamService;
-import com.example.diploma.service.ProfessorService;
-import com.example.diploma.service.StudentService;
+import com.example.diploma.service.*;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,12 +22,14 @@ public class ProfessorExamController {
     private final ProfessorService professorService;
     private final ClassService classService;
     private StudentService studentService;
+    private ClassRequirementService classRequirementService;
 
-    public ProfessorExamController(ExamService examService, ProfessorService professorService, ClassService classService, StudentService studentService) {
+    public ProfessorExamController(ExamService examService, ProfessorService professorService, ClassService classService, StudentService studentService, ClassRequirementService classRequirementService) {
         this.examService = examService;
         this.professorService = professorService;
         this.classService = classService;
         this.studentService = studentService;
+        this.classRequirementService = classRequirementService;
     }
 
 
@@ -108,7 +108,7 @@ public class ProfessorExamController {
     }
 
 
-    //view student list for exam and scores
+
     @GetMapping("/{examId}/students")
     public String viewExamStudents(@PathVariable("examId") int examId, Model model) {
         List<Student> eligibleStudents = examService.getStudentsForExam(examId);
@@ -120,7 +120,7 @@ public class ProfessorExamController {
             studentExamMap.put(student, examCopy);
         }
 
-        // Add the map to the model
+
         model.addAttribute("studentExamMap", studentExamMap);
         model.addAttribute("exam", exam);
 
@@ -130,13 +130,13 @@ public class ProfessorExamController {
     public String showEditExamPage(@PathVariable("examId") int examId, @PathVariable("studentId") int studentId, Model model) {
         ExamCopy examCopy = examService.getExamCopyForStudentAndExam(studentId, examId);
 
-        // If no exam copy exists, create a new one with default values
+
         if (examCopy == null) {
             examCopy = new ExamCopy();
             examCopy.setStudent(studentService.getStudentById(studentId));
             examCopy.setExam(examService.getExamById(examId));
-            examCopy.setStatus("Absent"); // Default to absent if not graded yet
-            examCopy.setScore(0); // Default score
+            examCopy.setStatus("Absent");
+            examCopy.setScore(0);
         }
 
         model.addAttribute("examCopy", examCopy);
@@ -148,12 +148,17 @@ public class ProfessorExamController {
     public String updateExamCopy(@PathVariable("studentId") int studentId,
                                  @PathVariable("examId") int examId,
                                  @RequestParam("status") String status,
-                                 @RequestParam("score") int score) {
+                                 @RequestParam("score") int score,
+                                 @RequestParam("examFile") MultipartFile examFile) {
 
-        examService.saveOrUpdateExamCopy(studentId, examId, status, score);
-
+        // Call the service to save or update the exam copy, including handling the file
+        examService.saveOrUpdateExamCopy(studentId, examId, status, score, examFile);
+        Class theClass =examService.getExamById(examId).getTheClass();
+        classRequirementService.calculateAndSaveFinalGrade(studentId,theClass.getId(),score);
         return "redirect:/professor/exams/" + examId + "/students";
     }
+
+
 
 
 

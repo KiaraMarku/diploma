@@ -26,13 +26,24 @@
 <body>
 <div layout:fragment="content">
 
-    <!-- Eligibility Status Box -->
-    <div class="eligibility-box" th:classappend="${isEligible} ? 'eligible' : 'not-eligible'">
-        <span th:if="${isEligible}" th:text="'Eligible for Exam'"></span>
-        <span th:if="${!isEligible}" th:text="'Not Eligible for Exam: ' + ${ineligibleReason}"></span>
+    <!-- Status Box -->
+    <div th:if="${!hasExamCopy}">
+        <div class="eligibility-box" th:classappend="${isEligible} ? 'eligible' : 'not-eligible'">
+            <span th:if="${isEligible}" th:text="'Eligible for Exam'"></span>
+            <span th:if="${!isEligible}" th:text="'Not Eligible for Exam: ' + ${ineligibleReason}"></span>
+        </div>
     </div>
 
-    <h3>Attendance Summary</h3>
+    <div th:if="${hasExamCopy}">
+        <div class="eligibility-box" th:classappend="${hasPassed} ? 'eligible' : 'not-eligible'">
+            <span th:if="${hasPassed}" th:text="'Passed with Final Grade: ' + ${finalGrade}"></span>
+            <span th:if="${!hasPassed}" th:text="'Failed with Final Grade: ' + ${finalGrade}"></span>
+        </div>
+        <h5>Exam Information</h5>
+        <p>Exam Score: <span th:text="${examCopy.score}"></span></p>
+        <p>Overall Score: <span th:text="${finalScore}"></span></p>
+    </div>
+    <h3>Class Requirements</h3>
     <hr>
 
     <!-- Seminar Attendance -->
@@ -82,6 +93,7 @@
         </tr>
         </tbody>
     </table>
+
 
     <!-- Form to Enter/Update Requirements -->
     <div sec:authorize="hasRole('PROFESSOR')">

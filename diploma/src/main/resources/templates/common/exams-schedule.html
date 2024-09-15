@@ -39,6 +39,7 @@
             </tbody>
         </table>
         <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
         <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/past/view}" class="btn btn-primary">View past Exams</a>
         <a sec:authorize="hasRole('STUDENT')" th:href="@{/student/exams/graded}" class="btn btn-primary">View Graded Exams</a>
     </div>

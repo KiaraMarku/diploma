@@ -10,10 +10,11 @@
 <body>
 <div layout:fragment="content">
     <h2>Edit Exam for <span th:text="${examCopy.student.firstName}+' '+ ${examCopy.student.lastName}"></span></h2>
-    <form id="examForm" th:action="@{/professor/exams/{examId}/student/{studentId}/edit(examId=${examCopy.exam.id}, studentId=${examCopy.student.id})}" method="post">
+    <form th:action="@{/professor/exams/{examId}/student/{studentId}/edit(examId=${examCopy.exam.id}, studentId=${examCopy.student.id})}"
+          method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="status">Status</label>
-            <select id="status" name="status" class="form-control" required>
+            <select id="status" name="status" class="form-control">
                 <option value="Present" th:selected="${examCopy.status == 'Present'}">Present</option>
                 <option value="Absent" th:selected="${examCopy.status == 'Absent'}">Absent</option>
             </select>
@@ -21,12 +22,21 @@
 
         <div class="form-group">
             <label for="score">Score</label>
-            <input type="number" id="score" name="score" class="form-control" min="0" max="100"
-                   th:value="${examCopy.score}" th:disabled="${examCopy.status == 'Absent'}" required>
+            <input type="number" id="score" name="score" class="form-control" th:value="${examCopy.score}" required>
         </div>
 
-        <button type="button" class="btn btn-primary" id="submitBtn">Save</button>
+        <div class="form-group">
+            <label for="examFile">Upload Exam File</label>
+            <input type="file" id="examFile" name="examFile" class="form-control">
+        </div>
+        <div class="my-2" th:if="${examCopy.fileName}">
+            <a th:href="@{/professor/exams/{examId}/student/{studentId}/downloadFile(examId=${examCopy.exam.id}, studentId=${examCopy.student.id})}"
+               target="_blank">Download Previously Uploaded File: <h5 th:text="${examCopy.fileName}"></h5></a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
+
 
     <!-- Modal for confirmation -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

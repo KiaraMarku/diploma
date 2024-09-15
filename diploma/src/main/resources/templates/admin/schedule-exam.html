@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Schedule Exam</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2>Schedule Exam</h2>
+    <div th:if="${error}" class="alert alert-danger">
+        <p th:text="${error}"></p>
+    </div>
+    <form th:action="@{/admin/exams/add/schedule}" th:object="${examDto}" method="post">
+        <div class="form-group">
+            <label for="class">Class</label>
+            <select id="class" th:field="*{classId}" class="form-control" required>
+                <option th:each="class : ${classes}" th:value="${class.id}" th:text="${class.name}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('classId')}" class="text-danger">
+                <p th:errors="*{classId}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="season">Exam Season</label>
+            <select id="season" th:field="*{seasonId}" class="form-control" required>
+                <option th:each="season : ${seasons}" th:value="${season.id}" th:text="${season.name}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('seasonId')}" class="text-danger">
+                <p th:errors="*{seasonId}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label >Date</label>
+            <input type="date" th:field="*{date}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('date')}" class="text-danger">
+                <p th:errors="*{date}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label >Start Time</label>
+            <input type="time" th:field="*{startTime}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('startTime')}" class="text-danger">
+                <p th:errors="*{startTime}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label >End Time</label>
+            <input type="time" th:field="*{endTime}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('endTime')}" class="text-danger">
+                <p th:errors="*{endTime}"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label >Exam Hall</label>
+            <input type="text" th:field="*{examHall}" class="form-control" required>
+            <div th:if="${#fields.hasErrors('examHall')}" class="text-danger">
+                <p th:errors="*{examHall}"></p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Schedule Exam</button>
+    </form>
+</div>
+</body>
+</html>

@@ -14,7 +14,7 @@
             <th>Date</th>
             <th>Status</th>
             <th>Grade</th>
-
+            <th>Exam File</th>
         </tr>
         </thead>
         <tbody>
@@ -23,7 +23,13 @@
             <td th:text="${exam.exam.date}"></td>
             <td th:text="${exam.status}"></td>
             <td th:text="${exam.grade}"></td>
-
+            <td>
+                <a th:if="${exam.fileName != null}"
+                   th:href="@{/student/exam/{examCopyId}/download(examCopyId=${exam.id})}">
+                    Download Exam
+                </a>
+                <span th:if="${exam.fileName == null}">No File</span>
+            </td>
         </tr>
         </tbody>
     </table>

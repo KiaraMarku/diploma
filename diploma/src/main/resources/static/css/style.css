@@ -180,6 +180,25 @@ ul.CTAs a {
     background-color: #254277;
 }
 
+.notification {
+    position: relative;
+    display: inline-block;
+}
+
+.notification i {
+    font-size: 24px;
+}
+
+#notificationCount {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    background-color: #fffbf7;
+    color: #fa62ff;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+}
 
 
 

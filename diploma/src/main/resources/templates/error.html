@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #0d0509;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgba(188, 87, 255, 0.65);
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Oops! Something went wrong.</h1>
+<p th:text="${message}">An error occurred.</p>
+<p><a th:href="@{/}">Go back to Home</a></p>
+</body>
+</html>

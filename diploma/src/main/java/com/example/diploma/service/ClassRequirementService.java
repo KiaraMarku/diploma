@@ -1,8 +1,9 @@
 package com.example.diploma.service;
 
-import com.example.diploma.entity.ClassRequirement;
-import com.example.diploma.entity.StudentClassRequirement;
+import com.example.diploma.entity.Class;
+import com.example.diploma.entity.*;
 import com.example.diploma.repository.ClassRequirementRepository;
+import com.example.diploma.repository.StudentClassGradeRepository;
 import com.example.diploma.repository.StudentClassRequirementRepository;
 import com.example.diploma.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ClassRequirementService {
@@ -19,13 +21,19 @@ public class ClassRequirementService {
     private final StudentClassRequirementRepository studentClassRequirementRepository;
     private LabAttendanceService labAttendanceService;
     private AttendanceService seminarAttendanceService;
+    private StudentClassGradeRepository studentClassGradeRepository;
+    private StudentService studentService;
+    private ClassService classService;
 
-    public ClassRequirementService(StudentRepository studentRepository, ClassRequirementRepository classRequirementRepository, StudentClassRequirementRepository studentClassRequirementRepository, LabAttendanceService labAttendanceService, AttendanceService seminarAttendanceService) {
+    public ClassRequirementService(StudentRepository studentRepository, ClassRequirementRepository classRequirementRepository, StudentClassRequirementRepository studentClassRequirementRepository, LabAttendanceService labAttendanceService, AttendanceService seminarAttendanceService, StudentClassGradeRepository studentClassGradeRepository, StudentService studentService, ClassService classService) {
         this.studentRepository = studentRepository;
         this.classRequirementRepository = classRequirementRepository;
         this.studentClassRequirementRepository = studentClassRequirementRepository;
         this.labAttendanceService = labAttendanceService;
         this.seminarAttendanceService = seminarAttendanceService;
+        this.studentClassGradeRepository = studentClassGradeRepository;
+        this.studentService = studentService;
+        this.classService = classService;
     }
 
     public List<ClassRequirement> getClassRequirementsForStudent(int studentId, int classId) {
@@ -109,4 +117,67 @@ public class ClassRequirementService {
 
         return eligibilityMap;
     }
+
+
+    public void calculateAndSaveFinalGrade(int studentId, int classId, int examScore) {
+
+        List<StudentClassRequirement> requirements = studentClassRequirementRepository.findByStudentIdAndClassId(studentId, classId);
+
+        int totalRequirementPoints = 0;
+        int totalObtainedPoints = 0;
+
+        for (StudentClassRequirement requirement : requirements) {
+            ClassRequirement classRequirement = requirement.getClassRequirement();
+
+            totalObtainedPoints += requirement.getScore();
+            totalRequirementPoints += classRequirement.getTotalPoints();
+        }
+
+        int totalOverallPoints = 100;
+        int totalExamPoints = totalOverallPoints - totalRequirementPoints;
+
+        double examWeight = (double) totalExamPoints / totalOverallPoints;
+        int finalScore = (int) ((examScore * examWeight) + totalObtainedPoints);
+
+        int finalGrade =  calculateGrade(finalScore);
+        String status = finalGrade >= 5 ? "Passed" : "Failed";
+
+
+        Student student = studentService.getStudentById(studentId);
+        Class theClass = classService.getClassById(classId);
+
+        StudentClassGrade studentClassGrade = studentClassGradeRepository.findByStudentIdAndTheClassId(studentId, classId)
+                .orElse(new StudentClassGrade());
+        studentClassGrade.setStudent(student);
+        studentClassGrade.setTheClass(theClass);
+        studentClassGrade.setFinalScore(finalScore);
+        studentClassGrade.setFinalGrade(finalGrade);
+        studentClassGrade.setStatus(status);
+
+        studentClassGradeRepository.save(studentClassGrade);
+
+    }
+
+    public Optional<StudentClassGrade> getFinalGradeForClass(int studentId, int classId) {
+        return studentClassGradeRepository.findByStudentIdAndTheClassId(studentId, classId);
+    }
+
+    public int calculateGrade(double finalScore) {
+        if (finalScore < 45) {
+            return 4;
+        } else if (finalScore < 55) {
+            return 5;
+        } else if (finalScore < 65) {
+            return 6;
+        } else if (finalScore < 75) {
+            return 7;
+        } else if (finalScore < 85) {
+            return 8;
+        } else if (finalScore < 95) {
+            return 9;
+        } else {
+            return 10;
+        }
+    }
+
 }

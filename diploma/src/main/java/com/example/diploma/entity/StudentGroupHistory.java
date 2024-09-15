@@ -22,6 +22,5 @@ public class StudentGroupHistory {
     private StudentGroup studentGroup;
 
     private Date date;
-
 }
 

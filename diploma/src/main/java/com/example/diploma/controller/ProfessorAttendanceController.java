@@ -28,7 +28,7 @@ public class ProfessorAttendanceController {
 
 
     @Autowired
-    public ProfessorAttendanceController(AttendanceService attendanceService, ProfessorService professorService, StudentService studentService, ScheduleService scheduleService, GroupService groupService, ClassService classService, LabAttendanceService labAttendanceService) {
+    public ProfessorAttendanceController(AttendanceService attendanceService, ProfessorService professorService, StudentService studentService, ScheduleService scheduleService, GroupService groupService, ClassService classService) {
         this.attendanceService = attendanceService;
         this.professorService = professorService;
         this.studentService = studentService;
