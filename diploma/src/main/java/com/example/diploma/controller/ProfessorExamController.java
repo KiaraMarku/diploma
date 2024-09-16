@@ -21,8 +21,8 @@ public class ProfessorExamController {
     private final ExamService examService;
     private final ProfessorService professorService;
     private final ClassService classService;
-    private StudentService studentService;
-    private ClassRequirementService classRequirementService;
+    private final StudentService studentService;
+    private final ClassRequirementService classRequirementService;
 
     public ProfessorExamController(ExamService examService, ProfessorService professorService, ClassService classService, StudentService studentService, ClassRequirementService classRequirementService) {
         this.examService = examService;
@@ -98,7 +98,7 @@ public class ProfessorExamController {
         return "redirect:/exams/schedule/view";
     }
 
-    //method to view exams that are finished
+
     @GetMapping("/past/view")
     public String viewPastExams(Model model) {
         Professor professor = professorService.getLoggedInProfessor();
@@ -151,7 +151,7 @@ public class ProfessorExamController {
                                  @RequestParam("score") int score,
                                  @RequestParam("examFile") MultipartFile examFile) {
 
-        // Call the service to save or update the exam copy, including handling the file
+
         examService.saveOrUpdateExamCopy(studentId, examId, status, score, examFile);
         Class theClass =examService.getExamById(examId).getTheClass();
         classRequirementService.calculateAndSaveFinalGrade(studentId,theClass.getId(),score);

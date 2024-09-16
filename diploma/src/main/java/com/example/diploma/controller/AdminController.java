@@ -68,7 +68,7 @@ public class AdminController {
             return "admin/student-registration";
         }
 
-        return "home";
+        return "common/home";
     }
 
     @GetMapping("/register/professorForm")

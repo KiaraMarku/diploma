@@ -9,11 +9,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public String handleException(Exception ex, Model model) {
-        model.addAttribute("message", "Something went wrong. Please try again later.");
-        return "error";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String handleException(Exception ex, Model model) {
+//        model.addAttribute("message", "Something went wrong. Please try again later.");
+//        return "error";
+//    }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handle404(NoHandlerFoundException ex, Model model) {
