@@ -8,13 +8,13 @@ import java.util.List;
 
 @Service
 public class ClassService {
-    private ClassRepository classRepository;
+    private final ClassRepository classRepository;
 
     public ClassService(ClassRepository classRepository) {
         this.classRepository = classRepository;
     }
 
-    public Class findById(Integer id){
+    public Class findById(Integer id) {
         return classRepository.findById(id).orElse(null);
     }
 

@@ -16,7 +16,7 @@ public class TestController {
 
 
     ScheduleService scheduleService;
-     LabAttendanceService lab;
+    LabAttendanceService lab;
 
     public TestController(LabAttendanceService labrepo) {
         this.lab = labrepo;
@@ -33,6 +33,6 @@ public class TestController {
     @ResponseBody
     public List<LabAttendance> getLabs() {
 
-        return lab.getLabAttendanceByClassAndStudent(1,14);
+        return lab.getLabAttendanceByClassAndStudent(1, 14);
     }
 }

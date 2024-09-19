@@ -75,7 +75,7 @@ public class ExamService {
     }
 
     public List<Student> getStudentsForExam(int examId) {
-        Class theClass=examRepository.findById(examId).orElse(null).getTheClass();
+        Class theClass = examRepository.findById(examId).orElse(null).getTheClass();
         List<StudentGroup> studentGroups = scheduleRepository.findGroupsByClassId(theClass.getId());
         List<Student> eligibleStudents = new ArrayList<>();
 
@@ -95,8 +95,6 @@ public class ExamService {
 
         return eligibleStudents;
     }
-
-
 
 
     public String calculateGrade(int points) {
@@ -119,10 +117,9 @@ public class ExamService {
     }
 
     public ExamCopy saveOrUpdateExamCopy(int studentId, int examId, String status, int score, MultipartFile examFile) {
-        Exam exam=examRepository.findById(examId).orElse(null);
-        Student student=studentRepository.findById(studentId).orElse(null);
-        ExamCopy examCopy = examCopyRepository.findByStudentIdAndExamId(studentId, examId)
-                .orElse(new ExamCopy());
+        Exam exam = examRepository.findById(examId).orElse(null);
+        Student student = studentRepository.findById(studentId).orElse(null);
+        ExamCopy examCopy = examCopyRepository.findByStudentIdAndExamId(studentId, examId).orElse(new ExamCopy());
         examCopy.setStatus(status);
         examCopy.setScore(score);
         examCopy.setGrade(calculateGrade(score));
@@ -141,11 +138,10 @@ public class ExamService {
         }
 
         examCopyRepository.save(examCopy);
-        String message = "Your exam for " + exam.getTheClass().getName() +" has been graded.";
+        String message = "Your exam for " + exam.getTheClass().getName() + " has been graded.";
         notificationService.createNotificationForStudent(studentId, message);
         return examCopy;
     }
-
 
 
     public List<ExamCopy> getGradedExamsForStudent(int studentId) {
@@ -157,6 +153,6 @@ public class ExamService {
     }
 
     public ExamCopy getExamCopyForStudentAndClass(int studentId, int classId) {
-       return examCopyRepository.findByStudentIdAndClassId(studentId,classId);
+        return examCopyRepository.findByStudentIdAndClassId(studentId, classId);
     }
 }

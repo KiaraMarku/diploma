@@ -10,15 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class ProfessorService {
 
     private ProfessorRepository professorRepository;
     private ScheduleRepository scheduleRepository;
-    public ProfessorService(){
+
+    public ProfessorService() {
 
     }
-     @Autowired
+
+    @Autowired
     public ProfessorService(ProfessorRepository professorRepository, ScheduleRepository scheduleRepository) {
         this.professorRepository = professorRepository;
         this.scheduleRepository = scheduleRepository;

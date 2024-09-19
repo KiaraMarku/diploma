@@ -13,10 +13,12 @@
             text-align: center;
             font-size: 1.5rem;
         }
+
         .eligible {
             background-color: #d4edda;
             color: #155724;
         }
+
         .not-eligible {
             background-color: #f8d7da;
             color: #721c24;
@@ -48,7 +50,8 @@
 
     <!-- Seminar Attendance -->
     <h5>Seminar Attendance</h5>
-    <p>Attended: <span th:text="${seminarAttendance.attended}"></span> / <span th:text="${seminarAttendance.total}"></span></p>
+    <p>Attended: <span th:text="${seminarAttendance.attended}"></span> / <span
+            th:text="${seminarAttendance.total}"></span></p>
     <p>Percentage: <span th:text="${seminarAttendance.percentage}"></span>%</p>
     <p th:if="${seminarAttendance.eligible}">
         Status: <span style="color: green;">Eligible</span>
@@ -87,8 +90,10 @@
             <td th:text="${requirement.classRequirement.requirementType}"></td>
             <td th:text="${requirement.score}"></td>
             <td>
-                <span th:if="${requirement.classRequirement.passFail}" th:text="${requirement.score == 1 ? 'Pass' : 'Fail'}"></span>
-                <span th:if="${!requirement.classRequirement.passFail}" th:text="${requirement.score >= 1 ? 'Pass' : 'Fail'}"></span>
+                <span th:if="${requirement.classRequirement.passFail}"
+                      th:text="${requirement.score == 1 ? 'Pass' : 'Fail'}"></span>
+                <span th:if="${!requirement.classRequirement.passFail}"
+                      th:text="${requirement.score >= 1 ? 'Pass' : 'Fail'}"></span>
             </td>
         </tr>
         </tbody>
@@ -138,7 +143,7 @@
     <script>
         // Prevent form submission on 'Enter' key for number inputs
         document.querySelectorAll('input[type="number"]').forEach(input => {
-            input.addEventListener('keydown', function(event) {
+            input.addEventListener('keydown', function (event) {
                 if (event.key === 'Enter') {
                     event.preventDefault();
                 }

@@ -26,9 +26,11 @@ public class AttendanceService {
         this.scheduleRepository = scheduleRepository;
         this.studentRepository = studentRepository;
     }
- public  List<Attendance> getAttendance(int week,int classId,int groupId){
+
+    public List<Attendance> getAttendance(int week, int classId, int groupId) {
         return attendanceRepository.findByWeekAndClassAndGroup(week, classId, groupId);
- }
+    }
+
     public List<Attendance> processAttendanceData(Map<String, String> attendanceData, int week, int classId, int groupId) throws ParseException, ParseException {
         List<Attendance> attendanceList = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -76,29 +78,28 @@ public class AttendanceService {
     }
 
 
-    public List<Attendance> getAttendanceForStudent(Student student, int classId,int week) {
-        return attendanceRepository.findByStudentAndClassAndWeek(student, classId,week);
+    public List<Attendance> getAttendanceForStudent(Student student, int classId, int week) {
+        return attendanceRepository.findByStudentAndClassAndWeek(student, classId, week);
     }
 
     public Map<String, Object> calculateSeminarAttendance(int studentId, int classId) {
         List<Attendance> seminarAttendance = attendanceRepository.findByStudentAndClass(studentId, classId);
         int totalSeminars = seminarAttendance.size();
-        long attendedSeminars ;
-        double percentage ;
-        boolean eligible ;
+        long attendedSeminars;
+        double percentage;
+        boolean eligible;
 
 
-         if(totalSeminars==0)  {
-             attendedSeminars=0;
-             percentage=100;
-             eligible=true;
+        if (totalSeminars == 0) {
+            attendedSeminars = 0;
+            percentage = 100;
+            eligible = true;
 
-         }
-         else {
-             attendedSeminars=seminarAttendance.stream().filter(Attendance::getAttended).count();
-             percentage=  (attendedSeminars / (double) totalSeminars) * 100;
-             eligible=  percentage >= 75;
-         }
+        } else {
+            attendedSeminars = seminarAttendance.stream().filter(Attendance::getAttended).count();
+            percentage = (attendedSeminars / (double) totalSeminars) * 100;
+            eligible = percentage >= 75;
+        }
         Map<String, Object> result = new HashMap<>();
         result.put("attended", attendedSeminars);
         result.put("total", totalSeminars);

@@ -1,49 +1,51 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
-  <title>Home Page</title>
+    <title>Home Page</title>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="container">
-    <h2>Lab Schedules</h2>
+    <div class="container">
+        <h2>Lab Schedules</h2>
 
-    <div th:each="class : ${classes}">
-      <h5 th:text="${class.name}"></h5>
-      <div >
-        <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
-      </div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Date</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Hall</th>
-          <th>Student Group</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="labSchedule : ${labSchedulesByClass[class.id]}">
-          <td th:text="${labSchedule.date}">Date</td>
-          <td th:text="${labSchedule.startTime}">Start Time</td>
-          <td th:text="${labSchedule.endTime}">End Time</td>
-          <td th:text="${labSchedule.hall}">Hall</td>
-          <td  th:text="${labSchedule.studentGroup.name + ' - ' + labSchedule.studentGroup.department.name + ' Year ' +labSchedule.studentGroup.yearLevel}"></td>
-          <td>
-            <a th:href="@{/professor/labs/attendance/{labScheduleId}(labScheduleId=${labSchedule.id})}" class="btn btn-primary m-1">Attendance</a>
-            <a th:href="@{/professor/labs/delete/{labScheduleId}(labScheduleId=${labSchedule.id})}" class="btn btn-danger m-1">Delete</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+        <div th:each="class : ${classes}">
+            <h5 th:text="${class.name}"></h5>
+            <div>
+                <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Hall</th>
+                    <th>Student Group</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="labSchedule : ${labSchedulesByClass[class.id]}">
+                    <td th:text="${labSchedule.date}">Date</td>
+                    <td th:text="${labSchedule.startTime}">Start Time</td>
+                    <td th:text="${labSchedule.endTime}">End Time</td>
+                    <td th:text="${labSchedule.hall}">Hall</td>
+                    <td th:text="${labSchedule.studentGroup.name + ' - ' + labSchedule.studentGroup.department.name + ' Year ' +labSchedule.studentGroup.yearLevel}"></td>
+                    <td>
+                        <a th:href="@{/professor/labs/attendance/{labScheduleId}(labScheduleId=${labSchedule.id})}"
+                           class="btn btn-primary m-1">Attendance</a>
+                        <a th:href="@{/professor/labs/delete/{labScheduleId}(labScheduleId=${labSchedule.id})}"
+                           class="btn btn-danger m-1">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-      <a th:href="@{/professor/class/{id}/addLabSchedule(id=${class.id})}" class="btn btn-primary">Add Lab Schedule</a>
+            <a th:href="@{/professor/class/{id}/addLabSchedule(id=${class.id})}" class="btn btn-primary">Add Lab
+                Schedule</a>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 </html>

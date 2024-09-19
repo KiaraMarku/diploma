@@ -20,25 +20,26 @@ public class MainController {
         this.userService = userService;
     }
 
-    @RequestMapping ("/")
-    public String showHome(){
+    @RequestMapping("/")
+    public String showHome() {
         return "common/home";
     }
 
     @RequestMapping("/showLoginPage")
-    public String showLoginForm(){
+    public String showLoginForm() {
         return "common/login-form";
     }
 
-    @RequestMapping ("/accessDenied")
-    public String showAccessDenied(){
+    @RequestMapping("/accessDenied")
+    public String showAccessDenied() {
         return "access-denied";
     }
 
     @GetMapping("user/changePassword")
     public String changePassword() {
-      return "common/change-password";
+        return "common/change-password";
     }
+
     @PostMapping("user/changePassword")
     public String changePassword(@ModelAttribute PasswordChangeDTO passwordChangeDTO, Model model) {
         User user = userService.getLoggedInUser();
@@ -54,8 +55,8 @@ public class MainController {
         }
 
         userService.updatePassword(user, passwordChangeDTO.getNewPassword());
-        model.addAttribute("success","Password changed");
+        model.addAttribute("success", "Password changed");
         return "common/change-password";
-}
+    }
 
 }

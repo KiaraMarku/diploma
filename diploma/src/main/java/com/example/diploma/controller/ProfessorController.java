@@ -4,7 +4,9 @@ import com.example.diploma.entity.Class;
 import com.example.diploma.entity.Professor;
 import com.example.diploma.entity.Student;
 import com.example.diploma.entity.StudentGroup;
-import com.example.diploma.service.*;
+import com.example.diploma.service.ProfessorService;
+import com.example.diploma.service.ScheduleService;
+import com.example.diploma.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class ProfessorController {
 
     private final ProfessorService professorService;
 
-    private  final ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     private final StudentService studentService;
 
@@ -29,9 +31,9 @@ public class ProfessorController {
 
 
     public ProfessorController(ProfessorService professorService, ScheduleService scheduleService, StudentService studentService) {
-      this.professorService=professorService;
-      this.studentService = studentService;
-      this.scheduleService=scheduleService;
+        this.professorService = professorService;
+        this.studentService = studentService;
+        this.scheduleService = scheduleService;
     }
 
     @GetMapping("/classes")
@@ -54,7 +56,7 @@ public class ProfessorController {
             List<Student> students = studentService.getStudentsByGroup(group.getId());
             studentsPerGroup.put(group, students);
         }
-        model.addAttribute("groups",groups);
+        model.addAttribute("groups", groups);
         model.addAttribute("studentsPerGroup", studentsPerGroup);
         model.addAttribute("classId", classId);
         return "professor/class-students";
@@ -62,7 +64,7 @@ public class ProfessorController {
 
     @GetMapping("/profile")
     public String viewProfile(Model model) {
-        professor=professorService.getLoggedInProfessor();
+        professor = professorService.getLoggedInProfessor();
         model.addAttribute("professor", professor);
         return "professor/professor-profile";
     }

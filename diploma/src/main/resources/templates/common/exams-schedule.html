@@ -9,92 +9,96 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div class="container">
-    <h2>Select Exam Season</h2>
-    <div>
-        <select id="seasonSelect" class="form-control">
-            <option value="" disabled selected>Select Season</option>
-            <option th:each="season : ${examSeasons}"
-                    th:value="${season.id}"
-                    th:text="${season.name}">
-            </option>
-        </select>
+    <div class="container">
+        <h2>Select Exam Season</h2>
+        <div>
+            <select id="seasonSelect" class="form-control">
+                <option value="" disabled selected>Select Season</option>
+                <option th:each="season : ${examSeasons}"
+                        th:value="${season.id}"
+                        th:text="${season.name}">
+                </option>
+            </select>
+        </div>
+
+        <div id="examSchedule" style="margin-top: 20px;">
+            <h3>Exam Schedule</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Hall</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="examScheduleBody">
+
+                </tbody>
+            </table>
+            <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/add/schedule}" class="btn btn-primary">Add
+                Exam Schedule</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/exams/add/schedule}" class="btn btn-primary">Add Exam
+                Schedule</a>
+            <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/past/view}" class="btn btn-primary">View
+                past Exams</a>
+            <a sec:authorize="hasRole('STUDENT')" th:href="@{/student/exams/graded}" class="btn btn-primary">View Graded
+                Exams</a>
+        </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#seasonSelect').on('change', function () {
+                var seasonId = $(this).val();
+                if (seasonId) {
+                    $.get('/exams', {seasonId: seasonId}, function (data) {
+                        var examScheduleBody = $('#examScheduleBody');
+                        examScheduleBody.empty();
+                        var userRole = $('#userRole').val();
+                        if (data.length === 0) {
+                            examScheduleBody.append('<tr><td colspan="5">No exams available</td></tr>');
+                        } else {
+                            $.each(data, function (index, exam) {
 
-    <div id="examSchedule" style="margin-top: 20px;">
-        <h3>Exam Schedule</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Class</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Hall</th>
-                <th > </th>
-            </tr>
-            </thead>
-            <tbody id="examScheduleBody">
+                                var row = '<tr>' +
+                                    '<td>' + exam.class.name + '</td>' +
+                                    '<td>' + exam.date + '</td>' +
+                                    '<td>' + exam.startTime + '</td>' +
+                                    '<td>' + exam.endTime + '</td>' +
+                                    '<td>' + exam.examHall + '</td>';
+                                if (userRole === 'ROLE_STUDENT') {
+                                    row += '<td><button class="delete-btn" data-exam-id="' + exam.id + '">Delete</button></td>';
+                                }
+                                row += '</tr>';
+                                examScheduleBody.append(row);
+                            });
+                            $('.delete-exam').click(function () {
+                                var examId = $(this).data('exam-id');
+                                if (confirm('Are you sure you want to delete this exam?')) {
+                                    $.ajax({
+                                        url: '/professor/exams/schedule/delete',
+                                        method: 'POST',
+                                        data: {examId: examId},
+                                        success: function () {
+                                            $('#season-select').trigger('change');
+                                        },
+                                        error: function () {
+                                            alert('Failed to delete the exam. Please try again.');
+                                        }
+                                    });
+                                }
+                            });
+                        }
 
-            </tbody>
-        </table>
-        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
-        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/exams/add/schedule}" class="btn btn-primary">Add Exam Schedule</a>
-        <a sec:authorize="hasRole('PROFESSOR')" th:href="@{/professor/exams/past/view}" class="btn btn-primary">View past Exams</a>
-        <a sec:authorize="hasRole('STUDENT')" th:href="@{/student/exams/graded}" class="btn btn-primary">View Graded Exams</a>
-    </div>
-</div>
-<script>
-    $(document).ready(function() {
-        $('#seasonSelect').on('change', function() {
-            var seasonId = $(this).val();
-            if (seasonId) {
-                $.get('/exams', { seasonId: seasonId }, function(data) {
-                    var examScheduleBody = $('#examScheduleBody');
-                    examScheduleBody.empty();
-                    var userRole = $('#userRole').val();
-                    if (data.length === 0) {
-                        examScheduleBody.append('<tr><td colspan="5">No exams available</td></tr>');
-                    } else {
-                        $.each(data, function(index, exam) {
-
-                            var row = '<tr>' +
-                                '<td>' + exam.class.name+ '</td>' +
-                                '<td>' + exam.date + '</td>' +
-                                '<td>' + exam.startTime + '</td>' +
-                                '<td>' + exam.endTime + '</td>' +
-                                '<td>' + exam.examHall + '</td>';
-                            if (userRole === 'ROLE_STUDENT') {
-                                row += '<td><button class="delete-btn" data-exam-id="' + exam.id + '">Delete</button></td>';
-                            }
-                               row+= '</tr>';
-                            examScheduleBody.append(row);
-                        });
-                        $('.delete-exam').click(function() {
-                            var examId = $(this).data('exam-id');
-                            if (confirm('Are you sure you want to delete this exam?')) {
-                                $.ajax({
-                                    url: '/professor/exams/schedule/delete',
-                                    method: 'POST',
-                                    data: { examId: examId },
-                                    success: function() {
-                                        $('#season-select').trigger('change');
-                                    },
-                                    error: function() {
-                                        alert('Failed to delete the exam. Please try again.');
-                                    }
-                                });
-                            }
-                        });
-                    }
-
-                }).fail(function() {
-                    console.error('Failed to load exam schedule');
-                });
-            }
+                    }).fail(function () {
+                        console.error('Failed to load exam schedule');
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
 </div>
 </body>
 </html>

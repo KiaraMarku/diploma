@@ -1,10 +1,9 @@
 package com.example.diploma.controller;
 
-import com.example.diploma.extra.ScheduleEvent;
 import com.example.diploma.entity.StudentGroup;
+import com.example.diploma.extra.ScheduleEvent;
 import com.example.diploma.service.GroupService;
 import com.example.diploma.service.ScheduleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +18,14 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
+    private final ScheduleService scheduleService;
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final GroupService groupService;
 
-    @Autowired
-    private GroupService groupService;
+    public ScheduleController(ScheduleService scheduleService, GroupService groupService) {
+        this.scheduleService = scheduleService;
+        this.groupService = groupService;
+    }
 
     @GetMapping
     public String showScheduleForm(Model model) {
@@ -49,7 +50,6 @@ public class ScheduleController {
 
         return scheduleService.convertToScheduleEvents(group.getSchedules());
     }
-
 
 
 }

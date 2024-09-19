@@ -17,7 +17,7 @@ import java.util.*;
 public class StudentController {
 
     private final StudentService studentService;
-    private  Student student;
+    private Student student;
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -26,7 +26,7 @@ public class StudentController {
 
     @GetMapping("/profile")
     public String viewProfile(Model model) {
-        this.student=studentService.getLoggedInStudent();
+        this.student = studentService.getLoggedInStudent();
         model.addAttribute("student", student);
         return "student/student-profile";
     }
@@ -46,7 +46,7 @@ public class StudentController {
 
         List<StudentClassGrade> passedClasses = studentService.getPassedClassesForStudent(student.getId());
         double averageGrade = studentService.calculateAverageGrade(passedClasses);
-        String avg= String.format("%.2f", averageGrade);
+        String avg = String.format("%.2f", averageGrade);
         int totalCredits = passedClasses.stream().mapToInt(cg -> cg.getTheClass().getCredits()).sum();
 
         model.addAttribute("classes", classes);
@@ -56,13 +56,6 @@ public class StudentController {
 
         return "student/student-classes";
     }
-
-
-
-
-
-
-
 
 
 }

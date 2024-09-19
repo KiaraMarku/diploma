@@ -37,17 +37,18 @@ public class RequirementsController {
 
     @GetMapping("/professor/student/{studentId}/performance/class/{classId}")
     public String viewPerformanceSummary(@PathVariable("classId") int classId,
-                                        @PathVariable("studentId") int studentId,
-                                        Model model) {
+                                         @PathVariable("studentId") int studentId,
+                                         Model model) {
 
 
-        calculatePerformance(classId,studentId,model);
+        calculatePerformance(classId, studentId, model);
         // Get class requirements
         List<ClassRequirement> classRequirements = classRequirementService.getClassRequirementsForStudent(studentId, classId);
         model.addAttribute("classRequirements", classRequirements);
         model.addAttribute("classRequirementDTO", new ClassRequirementDTO());
-         return "common/performance-summary";
+        return "common/performance-summary";
     }
+
     @PostMapping("/professor/student/{studentId}/class/{classId}/saveRequirements")
     public String saveStudentRequirements(@PathVariable("studentId") int studentId,
                                           @PathVariable("classId") int classId,
@@ -62,15 +63,14 @@ public class RequirementsController {
 
     @GetMapping("/student/summary/{classId}")
     public String viewPerformanceSummary(@PathVariable("classId") int classId, Model model) {
-        Student student=studentService.getLoggedInStudent();
-        calculatePerformance(classId,student.getId(),model);
+        Student student = studentService.getLoggedInStudent();
+        calculatePerformance(classId, student.getId(), model);
 
         return "common/performance-summary";
     }
 
 
-
-    private void calculatePerformance(int classId,int studentId,Model model){
+    private void calculatePerformance(int classId, int studentId, Model model) {
         // Seminar attendance
         Map<String, Object> seminarAttendance = seminarAttendanceService.calculateSeminarAttendance(studentId, classId);
         model.addAttribute("seminarAttendance", seminarAttendance);
@@ -80,7 +80,7 @@ public class RequirementsController {
         model.addAttribute("labAttendance", labAttendance);
 
 
-        List<StudentClassRequirement> studentRequirements = classRequirementService.findByStudentIdAndClassId(studentId,classId);
+        List<StudentClassRequirement> studentRequirements = classRequirementService.findByStudentIdAndClassId(studentId, classId);
         model.addAttribute("studentRequirements", studentRequirements);
 
         // Get eligibility data
@@ -95,13 +95,13 @@ public class RequirementsController {
         // Get graded exam copy if it exists
         ExamCopy examCopy = examService.getExamCopyForStudentAndClass(studentId, classId);
         model.addAttribute("examCopy", examCopy);
-        StudentClassGrade studentClassGrade=classRequirementService.getFinalGradeForClass(studentId,classId).orElse(null);
+        StudentClassGrade studentClassGrade = classRequirementService.getFinalGradeForClass(studentId, classId).orElse(null);
 
         // Check if the student has a graded exam and calculate the final grade
-        if (examCopy != null && studentClassGrade!=null) {
+        if (examCopy != null && studentClassGrade != null) {
             double finalScore = studentClassGrade.getFinalScore();
-            int finalGrade= (int) studentClassGrade.getFinalGrade();
-            model.addAttribute("finalScore",finalScore);
+            int finalGrade = (int) studentClassGrade.getFinalGrade();
+            model.addAttribute("finalScore", finalScore);
             model.addAttribute("finalGrade", finalGrade);
             model.addAttribute("hasExamCopy", true);
 

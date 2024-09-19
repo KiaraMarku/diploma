@@ -18,7 +18,7 @@ import java.util.List;
 public class NotificationController {
 
     private final NotificationService notificationService;
-    private StudentService studentService;
+    private final StudentService studentService;
 
     public NotificationController(NotificationService notificationService, StudentService studentService) {
         this.notificationService = notificationService;

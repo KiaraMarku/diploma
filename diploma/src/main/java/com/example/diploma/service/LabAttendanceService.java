@@ -4,8 +4,6 @@ import com.example.diploma.entity.LabAttendance;
 import com.example.diploma.entity.LabSchedule;
 import com.example.diploma.entity.Student;
 import com.example.diploma.repository.LabAttendanceRepository;
-import com.example.diploma.repository.LabScheduleRepository;
-import com.example.diploma.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +17,7 @@ public class LabAttendanceService {
     private final LabAttendanceRepository labAttendanceRepository;
 
     @Autowired
-    public LabAttendanceService(LabAttendanceRepository labAttendanceRepository,
-                                StudentRepository studentRepository,
-                                LabScheduleRepository labScheduleRepository) {
+    public LabAttendanceService(LabAttendanceRepository labAttendanceRepository) {
         this.labAttendanceRepository = labAttendanceRepository;
 
     }
@@ -43,20 +39,19 @@ public class LabAttendanceService {
     }
 
     public Map<String, Object> calculateLabAttendance(int studentId, int classId) {
-        List<LabAttendance> labAttendance = labAttendanceRepository.findByClassIdAndStudentId( classId,studentId);
+        List<LabAttendance> labAttendance = labAttendanceRepository.findByClassIdAndStudentId(classId, studentId);
         int totalLabs = labAttendance.size();
-        long attendedLabs=0;
-        double percentage=0;
-        boolean eligible=false;
+        long attendedLabs = 0;
+        double percentage = 0;
+        boolean eligible = false;
 
-        if(totalLabs==0){
-             percentage =  100;
-             eligible =true;
-        }
-        else {
+        if (totalLabs == 0) {
+            percentage = 100;
+            eligible = true;
+        } else {
             attendedLabs = labAttendance.stream().filter(LabAttendance::getAttended).count();
-            percentage= (attendedLabs / (double) totalLabs) * 100;
-            eligible= percentage == 100;
+            percentage = (attendedLabs / (double) totalLabs) * 100;
+            eligible = percentage == 100;
         }
         Map<String, Object> result = new HashMap<>();
         result.put("attended", attendedLabs);

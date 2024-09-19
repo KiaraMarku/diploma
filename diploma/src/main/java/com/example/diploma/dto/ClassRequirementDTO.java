@@ -9,7 +9,4 @@ public class ClassRequirementDTO {
         return requirements;
     }
 
-    public void setRequirements(Map<Integer, Integer> requirements) {
-        this.requirements = requirements;
-    }
 }

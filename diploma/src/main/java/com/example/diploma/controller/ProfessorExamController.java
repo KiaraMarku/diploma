@@ -35,15 +35,14 @@ public class ProfessorExamController {
 
     @GetMapping("/add/schedule")
     public String showScheduleForm(Model model) {
-        Professor professor=professorService.getLoggedInProfessor();
+        Professor professor = professorService.getLoggedInProfessor();
         List<Class> classes = professorService.getClassesForProfessor(professor);
         List<ExamSeason> seasons = examService.getAllExamSeasons();
-        model.addAttribute("examDto",new ExamDto());
+        model.addAttribute("examDto", new ExamDto());
         model.addAttribute("classes", classes);
         model.addAttribute("seasons", seasons);
         return "professor/exams/schedule-exam";
     }
-
 
 
     @PostMapping("/add/schedule")
@@ -52,7 +51,6 @@ public class ProfessorExamController {
         Professor professor = professorService.getLoggedInProfessor();
         List<Class> classes = professorService.getClassesForProfessor(professor);
         List<ExamSeason> seasons = examService.getAllExamSeasons();
-
 
 
         boolean exists = examService.existsByClassIdAndExamSeasonId(examDto.getClassId(), examDto.getSeasonId());
@@ -92,6 +90,7 @@ public class ProfessorExamController {
 
         return "redirect:/exams/schedule/view";
     }
+
     @PostMapping("/schedule/delete")
     public String deleteExamSchedule(@RequestParam("examId") int examId) {
         examService.deleteById(examId);
@@ -106,7 +105,6 @@ public class ProfessorExamController {
         model.addAttribute("pastExams", pastExams);
         return "professor/exams/past-exams";
     }
-
 
 
     @GetMapping("/{examId}/students")
@@ -126,6 +124,7 @@ public class ProfessorExamController {
 
         return "professor/exams/exam-student-list";
     }
+
     @GetMapping("/{examId}/student/{studentId}/edit")
     public String showEditExamPage(@PathVariable("examId") int examId, @PathVariable("studentId") int studentId, Model model) {
         ExamCopy examCopy = examService.getExamCopyForStudentAndExam(studentId, examId);
@@ -153,17 +152,10 @@ public class ProfessorExamController {
 
 
         examService.saveOrUpdateExamCopy(studentId, examId, status, score, examFile);
-        Class theClass =examService.getExamById(examId).getTheClass();
-        classRequirementService.calculateAndSaveFinalGrade(studentId,theClass.getId(),score);
+        Class theClass = examService.getExamById(examId).getTheClass();
+        classRequirementService.calculateAndSaveFinalGrade(studentId, theClass.getId(), score);
         return "redirect:/professor/exams/" + examId + "/students";
     }
-
-
-
-
-
-
-
 
 
 }

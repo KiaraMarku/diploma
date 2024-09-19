@@ -11,10 +11,11 @@ public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
 
-    public DepartmentService(DepartmentRepository departmenRepository) {
-        this.departmentRepository = departmenRepository;
+    public DepartmentService(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
-    public List<Department> findAll(){
+
+    public List<Department> findAll() {
         return departmentRepository.findAll();
 
     }

@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
-  <title>Home Page</title>
-  <style>
-    thead {
-      background-color: #254277;
-      color: white;
-    }
-  </style>
+    <title>Home Page</title>
+    <style>
+        thead {
+            background-color: #254277;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
-  <h3>Students for Class</h3>
-  <br>
-  <div th:each="group : ${groups}">
-    <h5 th:text="${group.name + ' ' + group.department.name + ' ' + group.yearLevel + ' '}">Group Name</h5>
+    <h3>Students for Class</h3>
+    <br>
+    <div th:each="group : ${groups}">
+        <h5 th:text="${group.name + ' ' + group.department.name + ' ' + group.yearLevel + ' '}">Group Name</h5>
 
-    <table border="1" class="table">
-      <thead>
-      <tr>
-        <th>Student Name</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="student : ${studentsPerGroup.get(group)}">
-        <td th:text="${student.firstName} + ' ' + ${student.lastName}">Student Name</td>
-        <td>
-          <a th:href="@{/professor/student/{studentId}/performance/class/{classId}(classId=${classId}, studentId=${student.id})}">
-            View Details
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+        <table border="1" class="table">
+            <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="student : ${studentsPerGroup.get(group)}">
+                <td th:text="${student.firstName} + ' ' + ${student.lastName}">Student Name</td>
+                <td>
+                    <a th:href="@{/professor/student/{studentId}/performance/class/{classId}(classId=${classId}, studentId=${student.id})}">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

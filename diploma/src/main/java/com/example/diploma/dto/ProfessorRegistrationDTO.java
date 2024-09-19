@@ -12,29 +12,29 @@ import lombok.Setter;
 public class ProfessorRegistrationDTO {
 
     @NotEmpty(message = "Username is required")
-     String username;
+    String username;
 
     @NotEmpty(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
-     String password;
+    String password;
 
     @NotEmpty(message = "Confirm Password is required")
-     String confirmPassword;
+    String confirmPassword;
 
     @NotEmpty(message = "First Name is required")
-     String firstName;
+    String firstName;
 
     @NotEmpty(message = "Last Name is required")
-     String lastName;
+    String lastName;
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Invalid email format")
     String email;
 
 
-     String major;
+    String major;
 
-     String title;
+    String title;
 
     private String birthDate;
 
@@ -43,8 +43,7 @@ public class ProfessorRegistrationDTO {
     @NotEmpty(message = "Card Id is required")
     private String cardId;
 
-     Integer departmentId;
-
+    Integer departmentId;
 
 
 }

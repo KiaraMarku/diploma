@@ -59,7 +59,7 @@
     </div>
     <script>
         // Disable score field if "Absent" is selected
-        document.getElementById('status').addEventListener('change', function() {
+        document.getElementById('status').addEventListener('change', function () {
             const scoreField = document.getElementById('score');
             scoreField.disabled = this.value === 'Absent';
             if (this.value === 'Absent') {
@@ -68,13 +68,13 @@
         });
 
 
-        document.getElementById('submitBtn').addEventListener('click', function() {
+        document.getElementById('submitBtn').addEventListener('click', function () {
             const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
             modal.show();
         });
 
 
-        document.getElementById('confirmSaveBtn').addEventListener('click', function() {
+        document.getElementById('confirmSaveBtn').addEventListener('click', function () {
             document.getElementById('examForm').submit();
         });
     </script>

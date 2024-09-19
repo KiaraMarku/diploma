@@ -19,11 +19,11 @@ public class ClassRequirementService {
     private final StudentRepository studentRepository;
     private final ClassRequirementRepository classRequirementRepository;
     private final StudentClassRequirementRepository studentClassRequirementRepository;
-    private LabAttendanceService labAttendanceService;
-    private AttendanceService seminarAttendanceService;
-    private StudentClassGradeRepository studentClassGradeRepository;
-    private StudentService studentService;
-    private ClassService classService;
+    private final LabAttendanceService labAttendanceService;
+    private final AttendanceService seminarAttendanceService;
+    private final StudentClassGradeRepository studentClassGradeRepository;
+    private final StudentService studentService;
+    private final ClassService classService;
 
     public ClassRequirementService(StudentRepository studentRepository, ClassRequirementRepository classRequirementRepository, StudentClassRequirementRepository studentClassRequirementRepository, LabAttendanceService labAttendanceService, AttendanceService seminarAttendanceService, StudentClassGradeRepository studentClassGradeRepository, StudentService studentService, ClassService classService) {
         this.studentRepository = studentRepository;
@@ -41,8 +41,8 @@ public class ClassRequirementService {
         return classRequirementRepository.findByTheClassId(classId);
     }
 
-    public List<StudentClassRequirement> findByStudentIdAndClassId(int studentId,int classId){
-        return studentClassRequirementRepository.findByStudentIdAndClassId(studentId,classId);
+    public List<StudentClassRequirement> findByStudentIdAndClassId(int studentId, int classId) {
+        return studentClassRequirementRepository.findByStudentIdAndClassId(studentId, classId);
     }
 
     public void saveStudentRequirements(int studentId, int classId, Map<Integer, Integer> requirements) {
@@ -139,7 +139,7 @@ public class ClassRequirementService {
         double examWeight = (double) totalExamPoints / totalOverallPoints;
         int finalScore = (int) ((examScore * examWeight) + totalObtainedPoints);
 
-        int finalGrade =  calculateGrade(finalScore);
+        int finalGrade = calculateGrade(finalScore);
         String status = finalGrade >= 5 ? "Passed" : "Failed";
 
 

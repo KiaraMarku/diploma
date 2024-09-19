@@ -3,7 +3,7 @@ package com.example.diploma.extra;
 import lombok.Data;
 
 @Data
-    public class ScheduleEvent {
+public class ScheduleEvent {
     private String title;
     private String start;
     private String end;

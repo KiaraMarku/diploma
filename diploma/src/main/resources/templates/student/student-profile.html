@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
     <title>Student Profile</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -17,7 +17,8 @@
             <div class="profile-details">
                 <h2 th:text="${student.firstName + ' ' + student.lastName}"></h2>
                 <p><strong>Email:</strong> <span th:text="${student.email}"></span></p>
-                <p><strong>Birth Date:</strong> <span th:text="${#dates.format(student.birthDate, 'yyyy-MM-dd')}"></span></p>
+                <p><strong>Birth Date:</strong> <span
+                        th:text="${#dates.format(student.birthDate, 'yyyy-MM-dd')}"></span></p>
                 <p><strong>Gender:</strong> <span th:text="${student.gender}">Gender</span></p>
                 <p><strong>Current Group:</strong> <span th:text="${student.studentGroup.name}"></span></p>
             </div>

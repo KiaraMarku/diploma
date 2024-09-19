@@ -1,46 +1,47 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
-  <title>Home Page</title>
+    <title>Home Page</title>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="container">
-    <h3>Your Lab Schedules</h3>
-    <div >
-      <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
+    <div class="container">
+        <h3>Your Lab Schedules</h3>
+        <div>
+            <img src="/images/lab.jpg" alt="Image description" class="img-fluid">
+        </div>
+        <div th:each="class : ${classes}">
+            <h5 th:text="${class.name}"></h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Hall</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="labSchedule : ${labSchedulesByClass.get(class.id)}">
+                    <td th:text="${labSchedule.date}"></td>
+                    <td th:text="${labSchedule.startTime}"></td>
+                    <td th:text="${labSchedule.endTime}"></td>
+                    <td th:text="${labSchedule.hall}"></td>
+                    <td>
+                        <span th:if="${labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}"
+                              style="color: green;">Attended</span>
+                        <span th:if="${!labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}"
+                              style="color: red;">Not Attended</span>
+                    </td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+        </div>
     </div>
-    <div th:each="class : ${classes}">
-      <h5 th:text="${class.name}"></h5>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Date</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-          <th>Hall</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="labSchedule : ${labSchedulesByClass.get(class.id)}">
-          <td th:text="${labSchedule.date}"></td>
-          <td th:text="${labSchedule.startTime}"></td>
-          <td th:text="${labSchedule.endTime}"></td>
-          <td th:text="${labSchedule.hall}"></td>
-          <td>
-            <span th:if="${labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}" style="color: green;">Attended</span>
-            <span th:if="${!labAttendanceStatusByClass.get(class.id).get(labSchedule.id)}" style="color: red;">Not Attended</span>
-          </td>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <br>
-    </div>
-  </div>
 </div>
 </body>
 </html>

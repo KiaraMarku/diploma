@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
     <title>Select Class</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -30,7 +30,8 @@
                     <div class="form-group">
                         <label for="week">Week</label>
                         <select id="week" name="week" class="form-control">
-                            <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}" th:text="${'Week ' + i}"></option>
+                            <option th:each="i : ${#numbers.sequence(1, 10)}" th:value="${i}"
+                                    th:text="${'Week ' + i}"></option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Mark Attendance</button>
@@ -41,31 +42,31 @@
             </div>
         </div>
     </div>
-<script>
-    $(document).ready(function() {
-        $('#class').on('change', function() {
-            var classId = $(this).val();
-            console.log("Selected classId: ", classId);
+    <script>
+        $(document).ready(function () {
+            $('#class').on('change', function () {
+                var classId = $(this).val();
+                console.log("Selected classId: ", classId);
 
-            if (classId) {
-                $.get('/professor/attendance/groups', { classId: classId }, function(data) {
-                    console.log("Groups data received:", data); // Debug log
+                if (classId) {
+                    $.get('/professor/attendance/groups', {classId: classId}, function (data) {
+                        console.log("Groups data received:", data); // Debug log
 
-                    var groupSelect = $('#group');
-                    groupSelect.empty();
-                    groupSelect.append('<option value="" disabled selected>Select Group</option>'); // Add default option
+                        var groupSelect = $('#group');
+                        groupSelect.empty();
+                        groupSelect.append('<option value="" disabled selected>Select Group</option>'); // Add default option
 
-                    $.each(data, function(index, group) {
-                        var optionText = group.name + ' (' + group.department.name + ', ' + group.yearLevel + ')';
-                        groupSelect.append('<option value="' + group.id + '">' + optionText + '</option>');
+                        $.each(data, function (index, group) {
+                            var optionText = group.name + ' (' + group.department.name + ', ' + group.yearLevel + ')';
+                            groupSelect.append('<option value="' + group.id + '">' + optionText + '</option>');
+                        });
+                    }).fail(function (xhr, status, error) {
+                        console.error("Failed to load groups data:", error);
                     });
-                }).fail(function(xhr, status, error) {
-                    console.error("Failed to load groups data:", error);
-                });
-            }
+                }
+            });
         });
-    });
-</script>
+    </script>
 </div>
 </body>
 </html>

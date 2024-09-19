@@ -19,7 +19,6 @@ import java.util.Set;
 @RequestMapping("student/attendance")
 public class StudentAttendanceController {
 
-
     private final AttendanceService attendanceService;
     private final StudentService studentService;
     private ClassService classService;
@@ -40,17 +39,16 @@ public class StudentAttendanceController {
     }
 
     @GetMapping("/records")
-    public String getAttendanceRecords(@RequestParam("classId") int classId,@RequestParam("week")int week, Model model) {
+    public String getAttendanceRecords(@RequestParam("classId") int classId, @RequestParam("week") int week, Model model) {
         Student student = studentService.getLoggedInStudent();
-        Class theClass=classService.findById(classId);
-        List<Attendance> attendanceList = attendanceService.getAttendanceForStudent(student, classId,week);
+        Class theClass = classService.findById(classId);
+        List<Attendance> attendanceList = attendanceService.getAttendanceForStudent(student, classId, week);
 
-        model.addAttribute("class",theClass);
-        model.addAttribute("week",week);
+        model.addAttribute("class", theClass);
+        model.addAttribute("week", week);
         model.addAttribute("attendanceList", attendanceList);
         return "student/student-attendance-records";
     }
-
 
 
 }

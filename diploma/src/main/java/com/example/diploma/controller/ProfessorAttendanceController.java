@@ -24,7 +24,7 @@ public class ProfessorAttendanceController {
     private final StudentService studentService;
     private final ScheduleService scheduleService;
     private final GroupService groupService;
-    private  final ClassService classService;
+    private final ClassService classService;
 
 
     @Autowired
@@ -54,7 +54,7 @@ public class ProfessorAttendanceController {
 
 
     @GetMapping("/mark")
-    public String markAttendance(@RequestParam("week") int week,@RequestParam("classId") int classId, @RequestParam("groupId") int groupId, Model model) {
+    public String markAttendance(@RequestParam("week") int week, @RequestParam("classId") int classId, @RequestParam("groupId") int groupId, Model model) {
         List<Schedule> schedules = scheduleService.getSchedulesForClassAndGroup(classId, groupId);
         List<Student> students = studentService.getStudentsByGroup(groupId);
 
@@ -65,17 +65,17 @@ public class ProfessorAttendanceController {
         for (Attendance attendance : existingAttendance) {
             String key = attendance.getStudent().getId() + "_" + attendance.getSchedule().getId();
             attendanceMap.put(key, attendance.getAttended());
-            dateMap.put(attendance.getSchedule().getId(),attendance.getDate());
+            dateMap.put(attendance.getSchedule().getId(), attendance.getDate());
         }
 
-        StudentGroup group=groupService.findById(groupId);
-        Class theClass=classService.findById(classId);
+        StudentGroup group = groupService.findById(groupId);
+        Class theClass = classService.findById(classId);
 
         model.addAttribute("schedules", schedules);
         model.addAttribute("students", students);
         model.addAttribute("class", theClass);
         model.addAttribute("group", group);
-        model.addAttribute("week",week);
+        model.addAttribute("week", week);
         model.addAttribute("attendanceMap", attendanceMap);
         model.addAttribute("dateMap", dateMap);
         return "professor/attendance/mark-attendance";

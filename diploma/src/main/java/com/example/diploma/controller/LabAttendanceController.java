@@ -9,7 +9,10 @@ import com.example.diploma.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,8 +64,8 @@ public class LabAttendanceController {
 
             LabAttendance labAttendance = labAttendanceService.getLabAttendanceForStudentAndSchedule(student, labSchedule);
 
-            if(labAttendance==null)
-                labAttendance=new LabAttendance();
+            if (labAttendance == null)
+                labAttendance = new LabAttendance();
 
             labAttendance.setStudent(student);
             labAttendance.setLabSchedule(labSchedule);
@@ -73,7 +76,6 @@ public class LabAttendanceController {
 
         return "redirect:/professor/labSchedules";
     }
-
 
 
 }

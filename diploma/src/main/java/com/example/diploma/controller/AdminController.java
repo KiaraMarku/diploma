@@ -21,12 +21,12 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private RegistrationService registrationService;
-    private GroupService groupService;
-    private DepartmentService departmentService;
-    private StudentService studentService;
-    private ProfessorService professorService;
-    private GroupService studentGroupService;
+    private final RegistrationService registrationService;
+    private final GroupService groupService;
+    private final DepartmentService departmentService;
+    private final StudentService studentService;
+    private final ProfessorService professorService;
+    private final GroupService studentGroupService;
 
     public AdminController(RegistrationService registrationService, GroupService groupService, DepartmentService departmentService, StudentService studentService, ProfessorService professorService, GroupService studentGroupService) {
         this.registrationService = registrationService;

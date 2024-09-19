@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 
 public class ClassController {
-    private ClassService classService;
+    private final ClassService classService;
 
     public ClassController(ClassService classService, LabScheduleService labScheduleService) {
         this.classService = classService;

@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
-  <title>Home Page</title>
+    <title>Home Page</title>
 </head>
 <body>
 <div layout:fragment="content">
-  <div class="container">
-    <h3>My Classes</h3>
-    <div >
-      <img src="/images/prof-classes.jpg" alt="mu classes" class="img-fluid ml-5" width="500px" >
-    </div>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Class Name</th>
-        <th>Description</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="class : ${classes}">
-        <td>
-          <a th:href="@{/class/{id}(id=${class.id})}" th:text="${class.name}"></a>
-        </td>
-        <td th:text="${class.description}"></td>
-        <td>
-          <a class="btn btn-primary" th:href="@{/professor/students/{id}(id=${class.id})}" >View Students</a>
-        </td>
-      </tr>
+    <div class="container">
+        <h3>My Classes</h3>
+        <div>
+            <img src="/images/prof-classes.jpg" alt="mu classes" class="img-fluid ml-5" width="500px">
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="class : ${classes}">
+                <td>
+                    <a th:href="@{/class/{id}(id=${class.id})}" th:text="${class.name}"></a>
+                </td>
+                <td th:text="${class.description}"></td>
+                <td>
+                    <a class="btn btn-primary" th:href="@{/professor/students/{id}(id=${class.id})}">View Students</a>
+                </td>
+            </tr>
 
-      </tbody>
-    </table>
-  </div>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

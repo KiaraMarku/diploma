@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+      layout:decorate="~{layout}">
 <head>
     <title>Home Page</title>
     <style>
-        .attendanceDetails{
+        .attendanceDetails {
             font-weight: bold;
             color: #81a6e8
         }
@@ -13,10 +13,10 @@
 <body>
 <div layout:fragment="content">
     <h3>Attendance Records</h3>
-<div class="attendanceDetails">
-    <div th:text="Class+': '+${class.name}"></div>
-    <div th:text=" Week+': '+${week}"></div>
-</div>
+    <div class="attendanceDetails">
+        <div th:text="Class+': '+${class.name}"></div>
+        <div th:text=" Week+': '+${week}"></div>
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -29,7 +29,7 @@
             <td th:text="${#dates.format(attendance.date, 'yyyy-MM-dd')}"></td>
             <td>
                 <span th:if="${attendance.attended}" style="color: #81a6e8">Present</span>
-                <span th:if="${!attendance.attended}"  >Absent</span>
+                <span th:if="${!attendance.attended}">Absent</span>
             </td>
         </tr>
         </tbody>

@@ -7,81 +7,84 @@
 </head>
 <body>
 <div class="container">
-    <form th:action="@{/admin/register/professor}" th:object="${professor}" method="post" class="needs-validation" novalidate>
+    <form th:action="@{/admin/register/professor}" th:object="${professor}" method="post" class="needs-validation"
+          novalidate>
         <h1>Professor Registration</h1>
         <div class="row">
             <div class="col-md-4">
-        <fieldset>
-            <legend><span class="number">1</span> Basic info</legend>
-            <label for="username">Username:</label>
-            <input type="text" id="username" th:field="*{username}" required>
-            <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                <fieldset>
+                    <legend><span class="number">1</span> Basic info</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" th:field="*{username}" required>
+                    <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" th:field="*{password}" required>
-            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" th:field="*{password}" required>
+                    <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
 
-            <label for="confirmPassword">Confirm Password:</label>
-            <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required>
-            <div class="error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" th:field="*{confirmPassword}" required>
+                    <div class="error" th:if="${#fields.hasErrors('confirmPassword')}"
+                         th:errors="*{confirmPassword}"></div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" th:field="*{email}" required>
-            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-        </fieldset>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" required>
+                    <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </fieldset>
 
             </div>
 
             <div class="col-md-4">
-        <fieldset>
-        <legend><span class="number">2</span> Personal  Info</legend>
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" th:field="*{firstName}" required>
-        <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+                <fieldset>
+                    <legend><span class="number">2</span> Personal Info</legend>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" th:field="*{firstName}" required>
+                    <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
 
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" th:field="*{lastName}" required>
-        <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" th:field="*{lastName}" required>
+                    <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 
-        <label for="birthDate">Birth Date:</label>
-        <input type="date" id="birthDate" th:field="*{birthDate}" class="form-control" required>
-        <div class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
+                    <label for="birthDate">Birth Date:</label>
+                    <input type="date" id="birthDate" th:field="*{birthDate}" class="form-control" required>
+                    <div class="error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
 
-        <label>Gender:</label>
-        <input type="radio" id="genderMale" th:field="*{gender}" value="Male" required>
-        <span >Male</span>
-        <input type="radio" id="genderFemale" th:field="*{gender}" value="Female" required>
-        <span>Female</span>
-        <div class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+                    <label>Gender:</label>
+                    <input type="radio" id="genderMale" th:field="*{gender}" value="Male" required>
+                    <span>Male</span>
+                    <input type="radio" id="genderFemale" th:field="*{gender}" value="Female" required>
+                    <span>Female</span>
+                    <div class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
 
-        <label for="cardId">Card ID:</label>
-        <input type="text" id="cardId" th:field="*{cardId}" class="form-control" required>
-        <div class="error" th:if="${#fields.hasErrors('cardId')}" th:errors="*{cardId}"></div>
-        </fieldset>
+                    <label for="cardId">Card ID:</label>
+                    <input type="text" id="cardId" th:field="*{cardId}" class="form-control" required>
+                    <div class="error" th:if="${#fields.hasErrors('cardId')}" th:errors="*{cardId}"></div>
+                </fieldset>
             </div>
 
             <div class="col-md-4">
-        <fieldset>
-            <legend><span class="number">3</span> Professional info</legend>
-            <label for="department">Department:</label>
-            <select id="department" th:field="*{departmentId}" required>
-                <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
-            </select>
-            <div class="error" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></div>
+                <fieldset>
+                    <legend><span class="number">3</span> Professional info</legend>
+                    <label for="department">Department:</label>
+                    <select id="department" th:field="*{departmentId}" required>
+                        <option th:each="department : ${departments}" th:value="${department.id}"
+                                th:text="${department.name}"></option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></div>
 
-            <label for="major">Major:</label>
-            <input type="text" id="major" th:field="*{major}" required>
-            <div class="error" th:if="${#fields.hasErrors('major')}" th:errors="*{major}"></div>
+                    <label for="major">Major:</label>
+                    <input type="text" id="major" th:field="*{major}" required>
+                    <div class="error" th:if="${#fields.hasErrors('major')}" th:errors="*{major}"></div>
 
-            <label for="title">Title:</label>
-            <select id="title" th:field="*{title}"  required>
-                <option value="" disabled selected>Select your title</option>
-                <option value="Msc">Msc</option>
-                <option value="Dr">Dr</option>
-                <option value="Prof">Prof</option>
-            </select>
-            <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
-        </fieldset>
+                    <label for="title">Title:</label>
+                    <select id="title" th:field="*{title}" required>
+                        <option value="" disabled selected>Select your title</option>
+                        <option value="Msc">Msc</option>
+                        <option value="Dr">Dr</option>
+                        <option value="Prof">Prof</option>
+                    </select>
+                    <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </fieldset>
             </div>
         </div>
         <button type="submit">Register</button>

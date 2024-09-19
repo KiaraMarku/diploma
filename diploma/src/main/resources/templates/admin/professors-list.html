@@ -7,33 +7,33 @@
 <body>
 <div>
     <div layout:fragment="content">
-    <h2>Professors by Department</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Card ID</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="professor : ${professors}">
-            <td th:text="${professor.firstName}"></td>
-            <td th:text="${professor.lastName}"></td>
-            <td th:text="${professor.email}"></td>
-            <td th:text="${professor.cardId}"></td>
-            <td>
-                <a th:href="@{/admin/professors/{id}/edit(id=${professor.id})}" class="btn btn-primary">Edit</a>
-                <a th:href="@{/admin/professors/{id}/delete(id=${professor.id})}" class="btn btn-danger"
-                   onclick="return confirm('Are you sure you want to delete this professor?');">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/admin/register/professorForm}" class="btn btn-primary">Register New Professor</a>
-</div>
+        <h2>Professors by Department</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Card ID</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="professor : ${professors}">
+                <td th:text="${professor.firstName}"></td>
+                <td th:text="${professor.lastName}"></td>
+                <td th:text="${professor.email}"></td>
+                <td th:text="${professor.cardId}"></td>
+                <td>
+                    <a th:href="@{/admin/professors/{id}/edit(id=${professor.id})}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{/admin/professors/{id}/delete(id=${professor.id})}" class="btn btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this professor?');">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/admin/register/professorForm}" class="btn btn-primary">Register New Professor</a>
+    </div>
 </div>
 </body>
 </html>

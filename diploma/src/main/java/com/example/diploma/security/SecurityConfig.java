@@ -15,8 +15,8 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
     //using default tables
-   @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource){
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
 

@@ -5,17 +5,18 @@
     <title>Student List</title>
 </head>
 <body>
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
-        <h2>Select Department</h2>
-        <form th:action="@{/admin/professors/department}" method="get">
-            <div class="form-group">
+    <h2>Select Department</h2>
+    <form th:action="@{/admin/professors/department}" method="get">
+        <div class="form-group">
             <select name="departmentId" class="form-control">
-                <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
+                <option th:each="department : ${departments}" th:value="${department.id}"
+                        th:text="${department.name}"></option>
             </select>
-            </div>
-            <button class="btn btn-primary" type="submit">View Professors</button>
-        </form>
+        </div>
+        <button class="btn btn-primary" type="submit">View Professors</button>
+    </form>
 
 </div>
 </body>

@@ -12,19 +12,18 @@ public class GroupService {
     StudentGroupRepository studentGroupRepository;
 
 
-    public GroupService(StudentGroupRepository studentGroupRepository){
-        this.studentGroupRepository=studentGroupRepository;
+    public GroupService(StudentGroupRepository studentGroupRepository) {
+        this.studentGroupRepository = studentGroupRepository;
     }
 
-   public List<StudentGroup> findAll(){
+    public List<StudentGroup> findAll() {
         return studentGroupRepository.findAll();
-   }
+    }
 
-    public StudentGroup findById(Integer id){
+    public StudentGroup findById(Integer id) {
 
         return studentGroupRepository.findById(id).orElse(null);
     }
-
 
 
 }

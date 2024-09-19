@@ -16,7 +16,7 @@
         <h5>Group: [[${labSchedule.studentGroup.name}]]</h5>
         <h5>Date: [[${labSchedule.date}]]</h5>
         <form th:action="@{/professor/labs/attendance/save}" method="post">
-            <input type="hidden" name="labScheduleId" th:value="${labSchedule.id}" />
+            <input type="hidden" name="labScheduleId" th:value="${labSchedule.id}"/>
             <table class="table">
                 <thead>
                 <tr>
@@ -31,9 +31,10 @@
                         <div class="checkbox-center">
                             <label>
                                 <input type="checkbox" th:name="${'attendance_' + student.id}"
-                                       th:checked="${attendanceMap[student.id] != null ? attendanceMap[student.id] : false}" value="true"/>
+                                       th:checked="${attendanceMap[student.id] != null ? attendanceMap[student.id] : false}"
+                                       value="true"/>
                                 <span class="custom-checkbox"></span>
-                                <input type="hidden" th:name="${'attendance_' + student.id }" value="false" />
+                                <input type="hidden" th:name="${'attendance_' + student.id }" value="false"/>
                             </label>
                         </div>
 

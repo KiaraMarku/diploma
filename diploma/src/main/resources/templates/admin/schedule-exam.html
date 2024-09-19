@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-group">
-            <label >Date</label>
+            <label>Date</label>
             <input type="date" th:field="*{date}" class="form-control" required>
             <div th:if="${#fields.hasErrors('date')}" class="text-danger">
                 <p th:errors="*{date}"></p>
@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group">
-            <label >Start Time</label>
+            <label>Start Time</label>
             <input type="time" th:field="*{startTime}" class="form-control" required>
             <div th:if="${#fields.hasErrors('startTime')}" class="text-danger">
                 <p th:errors="*{startTime}"></p>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="form-group">
-            <label >End Time</label>
+            <label>End Time</label>
             <input type="time" th:field="*{endTime}" class="form-control" required>
             <div th:if="${#fields.hasErrors('endTime')}" class="text-danger">
                 <p th:errors="*{endTime}"></p>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="form-group">
-            <label >Exam Hall</label>
+            <label>Exam Hall</label>
             <input type="text" th:field="*{examHall}" class="form-control" required>
             <div th:if="${#fields.hasErrors('examHall')}" class="text-danger">
                 <p th:errors="*{examHall}"></p>

@@ -1,8 +1,8 @@
 package com.example.diploma.controller;
 
 import com.example.diploma.dto.ExamDto;
-import com.example.diploma.entity.*;
 import com.example.diploma.entity.Class;
+import com.example.diploma.entity.*;
 import com.example.diploma.service.ClassService;
 import com.example.diploma.service.ExamService;
 import com.example.diploma.service.StudentService;
@@ -24,8 +24,8 @@ public class ExamController {
 
     private final ExamService examService;
 
-    private StudentService studentService;
-    private ClassService classService;
+    private final StudentService studentService;
+    private final ClassService classService;
 
     public ExamController(ExamService examService, StudentService studentService, ClassService classService) {
         this.examService = examService;
@@ -85,7 +85,7 @@ public class ExamController {
 
         List<Class> classes = classService.getAllClasses();
         List<ExamSeason> seasons = examService.getAllExamSeasons();
-        model.addAttribute("examDto",new ExamDto());
+        model.addAttribute("examDto", new ExamDto());
         model.addAttribute("classes", classes);
         model.addAttribute("seasons", seasons);
         return "admin/schedule-exam";
